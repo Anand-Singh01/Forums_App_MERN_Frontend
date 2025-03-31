@@ -1,19 +1,20 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClientProvider } from "@tanstack/react-query";
 import axios from "axios";
 import { ReactNode } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
+import { ToastContainer } from 'react-toastify';
 import "./index.css";
 import Feed from "./pages/HomePage/components/feed/Feed";
 import HomePage from "./pages/HomePage/HomePage";
 import LoginPage from "./pages/loginPage/LoginPage";
 import RegisterForm from "./pages/registerPage/components/RegisterForm";
 import ProtectedRoutes from "./shared/protectedRoute/ProtectedRoutes";
+import { queryClient } from "./state/tanstack/queryClient";
 import routes from "./utils/routes";
 
 axios.defaults.baseURL = "https://jsonplaceholder.typicode.com";
 const App = () => {
   
-  const queryClient = new QueryClient();
   const location = useLocation(); 
   let currentElement: ReactNode = null;
 
@@ -28,6 +29,7 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <div className="w-screen h-screen">
+        <ToastContainer/>
         <Routes>
           <Route path={routes.login} element={<LoginPage />} />
           <Route path={routes.register} element={<RegisterForm />} />

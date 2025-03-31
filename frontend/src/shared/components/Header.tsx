@@ -1,6 +1,5 @@
 import { AvatarFallback } from "@radix-ui/react-avatar";
 import { Avatar, AvatarImage } from "../../components/ui/avatar";
-import { Input } from "../../components/ui/input";
 import { useAppSelector } from "../../state/hooks";
 import {
   getProfileImageSelector,
@@ -14,14 +13,13 @@ const Header = () => {
   }));
 
   return (
-    <div className="flex justify-between items-center p-3 px-5 
-    bg-gradient-to-br from-purple-50 to-purple-100">
+    <div className="flex justify-between items-center p-3 px-[2rem] bg-white">
       <section className="flex gap-[5rem] w-full items-center">
-        <h2 className="whitespace-nowrap text-lg font-medium">Snap-hive</h2>
-        <Input
+        <h2 className="whitespace-nowrap text-lg">Snap-hive</h2>
+        {/* <Input
           className="md:w-[50%] w-[40%] bg-white"
           placeholder="Search friends here"
-        ></Input>
+        ></Input> */}
       </section>
       <section className="flex gap-2 items-center">
         {/* <Avatar>

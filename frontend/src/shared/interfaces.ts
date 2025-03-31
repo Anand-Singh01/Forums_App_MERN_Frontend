@@ -24,6 +24,7 @@ export interface IPostInfo {
   caption: string;
   region: string | null;
   postImage: string;
+  isLiked:boolean,
   postedBy: {
     userId: string;
     userName: string;

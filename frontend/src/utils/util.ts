@@ -1,7 +1,8 @@
-import AppsOutlinedIcon from "@mui/icons-material/AppsOutlined";
 import BookmarksOutlinedIcon from "@mui/icons-material/BookmarksOutlined";
-import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
+import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+import TextsmsOutlinedIcon from "@mui/icons-material/TextsmsOutlined";
 export const leftSideBarLinks = [
   {
     Icon: HomeOutlinedIcon,
@@ -9,20 +10,26 @@ export const leftSideBarLinks = [
     title: "Feed",
   },
   {
-    Icon: AppsOutlinedIcon,
-    path: "/explore",
-    title: "Explore",
+    Icon: SearchOutlinedIcon,
+    path: "/search",
+    title: "Search",
+  },
+
+  {
+    Icon: TextsmsOutlinedIcon,
+    path: "/messages",
+    title: "Messages",
   },
 
   {
     Icon: BookmarksOutlinedIcon,
     path: "/saved",
-    title: "Saved posts",
+    title: "My favorites",
   },
 
   {
-    Icon: FavoriteBorderOutlinedIcon,
-    path: "/liked",
-    title: "Liked Posts",
+    Icon: SettingsOutlinedIcon,
+    path: "/settings",
+    title: "Settings",
   },
 ];

@@ -11,3 +11,20 @@ export const getAllPostsApi = async (): Promise<IPostInfo[]> => {
   const { data } = response.data as IExtendedResponse<IPostInfo[]>;
   return data;
 };
+
+export const addPostApi = async (
+  file: File,
+  caption: string,
+  location: string | null
+): Promise<IPostInfo> => {
+  const formData = new FormData();
+  formData.append("postImage", file);
+  formData.append("caption", caption);
+  if (location) {
+    formData.append("location", location);
+  }
+  const response = await axios.post("/post/add-post", formData, {
+    withCredentials: true,
+  });
+  return response.data.data;
+};
