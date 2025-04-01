@@ -9,7 +9,15 @@ interface IPostContainerProps {
 }
 const PostContainer: React.FC<IPostContainerProps> = ({ post }) => {
   const { profileImage, userName } = post.postedBy;
-  const { region, postImage, totalLikes, isLiked, totalComments, caption, postId } = post;
+  const {
+    region,
+    postImage,
+    totalLikes,
+    isLiked,
+    totalComments,
+    caption,
+    postId,
+  } = post;
   return (
     <div className="p-3 h-fit bg-white shadow-sm space-y-3 rounded-md">
       <section className="space-y-2">
@@ -26,9 +34,14 @@ const PostContainer: React.FC<IPostContainerProps> = ({ post }) => {
       <section className="flex justify-center">
         <PostImage postImage={postImage} />
       </section>
-      <LikeCommentAndShare isLiked={isLiked} postId={postId} totalLikes={totalLikes} totalComments={totalComments}/>
+      <LikeCommentAndShare
+        isLiked={isLiked}
+        postId={postId}
+        totalLikes={totalLikes}
+        totalComments={totalComments}
+      />
       <section>
-        <AddComment profileImage={profileImage} />
+        <AddComment postId={postId} profileImage={profileImage} />
       </section>
     </div>
   );

@@ -3,6 +3,8 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import { useState } from "react";
+import { useAppDispatch } from "../../../state/hooks";
+import { updateSelectedPostIdOnFeed } from "../../../state/slices/postSlice";
 interface LikeCommentAndShareProps {
   totalLikes: number;
   totalComments: number;
@@ -16,6 +18,8 @@ const LikeCommentAndShare = ({
   totalLikes,
 }: LikeCommentAndShareProps) => {
   const [liked, setLiked] = useState(isLiked);
+
+  const dispatch = useAppDispatch();
   return (
     <div>
       <section className="flex md:gap-5 justify-end">
@@ -34,7 +38,10 @@ const LikeCommentAndShare = ({
           </div>
         </div>
 
-        <div className="flex gap-2 items-center">
+        <div
+          onClick={() => dispatch(updateSelectedPostIdOnFeed(postId))}
+          className="flex gap-2 items cursor-pointer"
+        >
           <div>
             <ChatBubbleOutlineOutlinedIcon
               sx={{ color: "#6a7282", fontSize: "1.2rem" }}

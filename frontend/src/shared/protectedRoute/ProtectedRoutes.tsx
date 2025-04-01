@@ -14,7 +14,6 @@ const ProtectedRoutes = () => {
   const isAuthenticated = useAppSelector(
     (state) => state.userInfoSlice.auth.isAuthenticated
   );
-
   const dispatch = useAppDispatch();
 
   const { isLoading, isError, data, isSuccess } = useQuery({
@@ -32,13 +31,20 @@ const ProtectedRoutes = () => {
     }
   }, [data, dispatch, isSuccess]);
 
+  useEffect(() => {
+    if (isError && !isAuthenticated) {
+      navigate(routes.login, { replace: true });
+    }
+  }, [isError, isAuthenticated, navigate]);
+
   if (isLoading && !isAuthenticated) {
     return <LoaderSpinner />;
   }
-  if (isError) {
-    navigate(routes.login);
+
+  if (!isAuthenticated) {
     return null;
   }
+
   return (
     <Layout>
       <Outlet />
