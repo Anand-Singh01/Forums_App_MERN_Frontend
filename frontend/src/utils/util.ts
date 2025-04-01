@@ -3,6 +3,9 @@ import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import TextsmsOutlinedIcon from "@mui/icons-material/TextsmsOutlined";
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+
+
 export const leftSideBarLinks = [
   {
     Icon: HomeOutlinedIcon,
@@ -24,7 +27,13 @@ export const leftSideBarLinks = [
   {
     Icon: BookmarksOutlinedIcon,
     path: "/saved",
-    title: "My favorites",
+    title: "My Saved",
+  },
+
+  {
+    Icon: FavoriteBorderIcon,
+    path: "/liked",
+    title: "My Liked",
   },
 
   {
@@ -32,4 +41,5 @@ export const leftSideBarLinks = [
     path: "/settings",
     title: "Settings",
   },
+  
 ];
