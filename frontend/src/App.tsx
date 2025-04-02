@@ -11,8 +11,7 @@ import RegisterForm from "./pages/registerPage/components/RegisterForm";
 import ProtectedRoutes from "./shared/protectedRoute/ProtectedRoutes";
 import { queryClient } from "./state/tanstack/queryClient";
 import routes from "./utils/routes";
-import LikedPostsPage from "./pages/LikedPostsPage/LikedPostsPage";
-import SavedPostsPage from "./pages/SavedPostsPage/SavedPostsPage";
+import LikedPostsPage from "./pages/HomePage/components/likedPosts/LikedPostsPage";
 
 
 axios.defaults.baseURL = "https://jsonplaceholder.typicode.com";
@@ -20,10 +19,12 @@ const App = () => {
   
   const location = useLocation(); 
   let currentElement: ReactNode = null;
-
   switch (location.pathname) {
     case "/":
       currentElement = <Feed />;
+      break;
+    case "/liked":
+      currentElement = <LikedPostsPage />;
       break;
     default:
       currentElement = null;
@@ -37,10 +38,11 @@ const App = () => {
           <Route path={routes.login} element={<LoginPage />} />
           <Route path={routes.register} element={<RegisterForm />} />
           <Route path={routes.home} element={<ProtectedRoutes />}>
-          <Route path={routes.liked} element={<LikedPostsPage />}/>
-          <Route path={routes.saved} element={<SavedPostsPage />}/>
 
-            <Route index element={<HomePage Element={currentElement!} />} />
+          <Route path={location.pathname} element={<HomePage Element={currentElement!} />} />
+            
+
+
           </Route>
         </Routes>
       </div>

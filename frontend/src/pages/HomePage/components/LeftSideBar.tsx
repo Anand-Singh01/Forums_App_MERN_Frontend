@@ -28,7 +28,8 @@ const LeftSideBar = () => {
     | "Feed"
     | "Search"
     | "Messages"
-    | "My favorites"
+    | "My Liked"
+    | "My Saved"
     | "Settings" = "Feed";
 
   const location = useLocation();
@@ -36,6 +37,9 @@ const LeftSideBar = () => {
   switch (location.pathname) {
     case "/":
       currentElement = "Feed";
+      break;
+    case "/liked":
+      currentElement = "My Liked";
       break;
     default:
       currentElement = "Feed";

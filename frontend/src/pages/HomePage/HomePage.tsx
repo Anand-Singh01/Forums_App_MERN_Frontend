@@ -1,7 +1,6 @@
 import React, { ReactNode } from "react";
 import LeftSideBar from "./components/LeftSideBar";
 import RightSideBar from "./components/rightSidebar/RightSideBar";
-
 interface IHomePageProps {
   Element: ReactNode;
 }

@@ -15,7 +15,7 @@ const Header = () => {
   return (
     <div className="flex justify-between items-center p-3 px-[2rem] bg-white">
       <section className="flex gap-[5rem] w-full items-center">
-        <h2 className="whitespace-nowrap text-lg">Snap-hive</h2>
+        <h2 className="whitespace-nowrap text-lg">Joygram</h2>
         {/* <Input
           className="md:w-[50%] w-[40%] bg-white"
           placeholder="Search friends here"
