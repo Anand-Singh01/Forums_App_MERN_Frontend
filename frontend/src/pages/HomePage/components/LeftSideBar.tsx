@@ -21,7 +21,7 @@ const LeftSideBar = () => {
     queryKey: ["followers"],
     queryFn: getAllFollowers,
     initialData: [],
-    retry: 1,
+    retry: 2,
   });
 
   let currentElement:

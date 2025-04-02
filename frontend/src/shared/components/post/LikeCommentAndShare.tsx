@@ -22,11 +22,6 @@ const LikeCommentAndShare = ({
   const dispatch = useAppDispatch();
   return (
     <div>
-      <section className="flex md:gap-5 justify-end">
-        <p className="lightText">{totalComments} Comments</p>
-        <p className="lightText">{totalLikes} Likes</p>
-      </section>
-
       <section className="flex md:gap-5 justify-between border-y-[1px] py-2 md:px-5">
         <div className="flex gap-2 items-center">
           <div className="cursor-pointer" onClick={() => setLiked(!liked)}>
@@ -36,6 +31,7 @@ const LikeCommentAndShare = ({
               <FavoriteBorderOutlinedIcon sx={{ fontSize: "1.2rem" }} />
             )}
           </div>
+          <p>{totalLikes}</p>
         </div>
 
         <div
@@ -47,6 +43,7 @@ const LikeCommentAndShare = ({
               sx={{ color: "#6a7282", fontSize: "1.2rem" }}
             />
           </div>
+          <p>{totalComments}</p>
         </div>
 
         <div className="flex gap-2 items-center">

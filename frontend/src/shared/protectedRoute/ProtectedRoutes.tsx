@@ -21,7 +21,7 @@ const ProtectedRoutes = () => {
     queryFn: checkAuthApi,
     staleTime: 0,
     enabled: !isAuthenticated,
-    retry: false,
+    retry: 2,
   });
 
   useEffect(() => {

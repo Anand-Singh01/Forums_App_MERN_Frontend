@@ -15,6 +15,20 @@ export interface ICommentDto {
   updatedAt: Date;
 }
 
+export interface IReplyDto {
+  replyId: string;
+  reply: string;
+  isEdited: boolean;
+  commentId: string;
+  replyBy: {
+    userId: string;
+    userName: string;
+    profilePicture: string;
+  };
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 export const addCommentApi = async (
   postId: string,
   comment: string
@@ -33,6 +47,29 @@ export const getAllCommentsApi = async (
   postId: string
 ): Promise<ICommentDto[]> => {
   const response = await axios.get(`/comment/get-all-comments/${postId}`, {
+    withCredentials: true,
+  });
+  return response.data.data;
+};
+
+export const addReplyApi = async (
+  commentId: string,
+  reply: string
+): Promise<IReplyDto> => {
+  const response = await axios.post(
+    "/comment/add-reply",
+    { commentId, reply },
+    {
+      withCredentials: true,
+    }
+  );
+  return response.data.data;
+};
+
+export const getAllReplyApi = async (
+  commentId: string
+): Promise<IReplyDto[]> => {
+  const response = await axios.get(`/comment/get-all-reply/${commentId}`, {
     withCredentials: true,
   });
   return response.data.data;
