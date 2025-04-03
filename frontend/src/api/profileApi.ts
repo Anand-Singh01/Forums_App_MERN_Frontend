@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-interface UserProfile {
+export interface UserProfile {
   id: string;
   username: string;
   fullName: string;
@@ -17,19 +17,20 @@ interface UserProfile {
     caption: string;
     likesCount: number;
     commentsCount: number;
+    createdAt: string;
   }>;
 }
 
 export const useGetUserProfile = (userId: string) => {
-    return useQuery<UserProfile>({
-      queryKey: ["userProfile", userId],
-      queryFn: async () => {
-        const response = await axios.get(`/get-profile`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`
-          }
-        });
-        return response.data;
-      },
-    });
-  };
+  return useQuery<UserProfile>({
+    queryKey: ["userProfile", userId],
+    queryFn: async () => {
+      const response = await axios.get(`/api/profile/get-profile`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+      return response.data;
+    },
+  });
+};

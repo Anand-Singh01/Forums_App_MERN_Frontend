@@ -36,3 +36,17 @@ export interface IPostInfo {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface IProfile {
+  userId: string;
+  userName: string;
+  profileName: string;
+  profilePicture: string;
+  bio?: string;
+  postsCount: number;
+  followersCount: number;
+  followingCount: number;
+  posts: IPostInfo[];
+}
+
+export interface IProfileResponse extends IExtendedResponse<IProfile> {}
