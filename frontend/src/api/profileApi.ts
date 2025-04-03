@@ -1,5 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { IProfileResponse } from "../shared/interfaces";
+
 
 export interface UserProfile {
   id: string;
@@ -22,15 +24,13 @@ export interface UserProfile {
 }
 
 export const useGetUserProfile = (userId: string) => {
-  return useQuery<UserProfile>({
-    queryKey: ["userProfile", userId],
+  return useQuery<IProfileResponse>({
+    queryKey: ['userProfile', userId],
     queryFn: async () => {
-      const response = await axios.get(`/api/profile/get-profile`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
+      const response = await axios.get<IProfileResponse>(`/profile/get-profile`, {
+        params: { userId }
       });
       return response.data;
-    },
+    }
   });
 };
