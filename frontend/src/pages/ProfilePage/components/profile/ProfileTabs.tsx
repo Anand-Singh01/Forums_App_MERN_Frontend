@@ -1,4 +1,3 @@
-// ProfileTabs.tsx
 import { Tab, Tabs } from "@mui/material";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
