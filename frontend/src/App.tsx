@@ -8,6 +8,7 @@ import ViewPostContainer from "./pages/HomePage/components/feed/components/ViewP
 import Feed from "./pages/HomePage/components/feed/Feed";
 import HomePage from "./pages/HomePage/HomePage";
 import LoginPage from "./pages/loginPage/LoginPage";
+import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import RegisterForm from "./pages/registerPage/components/RegisterForm";
 import ModalManager from "./shared/components/ModalManager";
 import ProtectedRoutes from "./shared/protectedRoute/ProtectedRoutes";
@@ -20,9 +21,8 @@ import SavedPostsPage from "./pages/HomePage/components/savedPosts/SavedPostsPag
 
 axios.defaults.baseURL = "https://jsonplaceholder.typicode.com";
 const App = () => {
-  const { isSelectedPostOnFeedVisible } = useAppSelector((state) => ({
-    isSelectedPostOnFeedVisible: state.postSlice.selectedPostIdOnFeed !== null,
-  }));
+  const location = useLocation(); 
+  let currentElement: ReactNode = null;
 
   let modalComponent: React.FC | null = null;
 
@@ -47,11 +47,8 @@ const App = () => {
     case "/":
       currentElement = <Feed />;
       break;
-    case "/liked":
-      currentElement = <LikedPostsPage />;
-      break;
-    case "/saved":
-      currentElement = <SavedPostsPage />;
+      case "/profile":
+        currentElement = <ProfilePage />;
       break;
     default:
       currentElement = null;
@@ -66,11 +63,8 @@ const App = () => {
           <Route path={routes.login} element={<LoginPage />} />
           <Route path={routes.register} element={<RegisterForm />} />
           <Route path={routes.home} element={<ProtectedRoutes />}>
-
-          <Route path={location.pathname} element={<HomePage Element={currentElement!} />} />
-            
-
-
+            <Route index element={<HomePage Element={<Feed />} />} />
+            <Route path={`${routes.profile}/:userId`} element={<HomePage Element={<ProfilePage />} />} />
           </Route>
         </Routes>
       </div>

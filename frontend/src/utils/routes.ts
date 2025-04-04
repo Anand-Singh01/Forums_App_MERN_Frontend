@@ -2,8 +2,10 @@ const routes = {
     home: "/",
     login: "/login",
     register:"/register",
-    //liked: "/liked",
-    //saved: "/saved",
+    profile: "/profile",
+    saved: "/saved",
+    liked: "/liked"
+
 };
 
 export default routes;
