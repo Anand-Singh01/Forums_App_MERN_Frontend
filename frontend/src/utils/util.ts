@@ -4,13 +4,17 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import TextsmsOutlinedIcon from "@mui/icons-material/TextsmsOutlined";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-export const leftSideBarLinks = [
+import { useAppSelector } from "../state/hooks";
 
-  {
-    Icon: AccountCircleIcon,
-    path: "/profile",
-    title: "Profile",
-  },
+export const leftSideBarLinks = () => {
+  const currentUserId = useAppSelector(state => state.userInfoSlice.userInfo.userId);
+  
+  return [
+    {
+      Icon: AccountCircleIcon,
+      path: `/profile/${currentUserId}`,
+      title: "Profile",
+    },
 
   {
     Icon: HomeOutlinedIcon,
@@ -41,4 +45,4 @@ export const leftSideBarLinks = [
     title: "Settings",
   },
 
-];
+]};

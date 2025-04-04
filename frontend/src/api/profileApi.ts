@@ -23,14 +23,13 @@ export interface UserProfile {
   }>;
 }
 
-export const useGetUserProfile = (userId: string) => {
+export const useGetUserProfile = (userId?: string) => {
   return useQuery<IProfileResponse>({
-    queryKey: ['userProfile', userId],
+    queryKey: ['profile', userId],
     queryFn: async () => {
-      const response = await axios.get<IProfileResponse>(`/profile/get-profile`, {
-        params: { userId }
-      });
+      const response = await axios.get(`/profile/get-profile/${userId}`);
       return response.data;
-    }
+    },
+    enabled: !!userId 
   });
 };

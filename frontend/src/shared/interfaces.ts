@@ -38,15 +38,19 @@ export interface IPostInfo {
 }
 
 export interface IProfile {
-  userId: string;
-  userName: string;
+  _id: string;
   profileName: string;
   profilePicture: string;
-  bio?: string;
-  postsCount: number;
-  followersCount: number;
-  followingCount: number;
-  posts: IPostInfo[];
+  profileDescription: string;
+  user: string;
+  followersCount?: number;
+  followingCount?: number;
+  postsCount?: number;
 }
 
-export interface IProfileResponse extends IExtendedResponse<IProfile> {}
+export interface IProfileResponse {
+  message: string;
+  status: boolean;
+  statusCode: number;
+  data: IProfile;
+}

@@ -37,8 +37,8 @@ const App = () => {
           <Route path={routes.login} element={<LoginPage />} />
           <Route path={routes.register} element={<RegisterForm />} />
           <Route path={routes.home} element={<ProtectedRoutes />}>
-          <Route index element={<HomePage Element={currentElement!} />} />
-          <Route path={routes.profile} element={<HomePage Element={currentElement!} />} />
+            <Route index element={<HomePage Element={<Feed />} />} />
+            <Route path={`${routes.profile}/:userId`} element={<HomePage Element={<ProfilePage />} />} />
           </Route>
         </Routes>
       </div>
