@@ -41,12 +41,13 @@ const LeftSideBar = () => {
     case "/liked":
       currentElement = "My Liked";
       break;
+    case "/messages":
+      currentElement = "Messages";
+      break;
     default:
       currentElement = "Feed";
       break;
   }
-
-  const displayedFollowers = followers.slice(0, MAX_FOLLOWERS_DISPLAY);
 
   return (
     <div className="w-[15rem] h-full flex flex-col bg-white pt-4 space-y-4 text-base sticky top-0">
@@ -76,23 +77,28 @@ const LeftSideBar = () => {
 
       {/* Followers Section */}
       <section className="px-5 space-y-4">
-        <h3 className="font-semibold text-gray-800">My Followers</h3>
+        <h3 className="font-semibold text-gray-800">
+          My Followers ({followers.length})
+        </h3>
 
         <div className="space-y-3">
           {isFetchingFollowers ? (
             <LoaderSpinner />
           ) : isError ? (
             <p className="text-red-500 text-sm">Failed to load followers</p>
-          ) : displayedFollowers.length === 0 ? (
+          ) : followers.length === 0 ? (
             <p className="text-gray-500 text-sm">No followers yet</p>
           ) : (
-            displayedFollowers.map(({ profilePicture, userId, userName }) => (
+            followers.map(({ profilePicture, userId, userName }) => (
               <Link
                 to={`/profile/${userId}`}
                 key={userId}
                 className="flex gap-2 items-center hover:bg-gray-50 p-2 rounded transition-colors"
               >
-                <img src={profilePicture} className="w-8 h-8" />
+                <img
+                  src={profilePicture}
+                  className="w-8 h-8 rounded-full object-cover"
+                />
                 <span className="truncate">{userName}</span>
               </Link>
             ))
