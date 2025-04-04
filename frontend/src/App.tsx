@@ -8,6 +8,7 @@ import ViewPostContainer from "./pages/HomePage/components/feed/components/ViewP
 import Feed from "./pages/HomePage/components/feed/Feed";
 import HomePage from "./pages/HomePage/HomePage";
 import LoginPage from "./pages/loginPage/LoginPage";
+import Message from "./pages/Message/Message";
 import RegisterForm from "./pages/registerPage/components/RegisterForm";
 import ModalManager from "./shared/components/ModalManager";
 import ProtectedRoutes from "./shared/protectedRoute/ProtectedRoutes";
@@ -45,6 +46,9 @@ const App = () => {
     case "/":
       currentElement = <Feed />;
       break;
+    case "/messages":
+      currentElement = <Message />;
+      break;
     default:
       currentElement = null;
   }
@@ -58,7 +62,10 @@ const App = () => {
           <Route path={routes.login} element={<LoginPage />} />
           <Route path={routes.register} element={<RegisterForm />} />
           <Route path={routes.home} element={<ProtectedRoutes />}>
-            <Route index element={<HomePage Element={currentElement!} />} />
+            <Route
+              path={location.pathname}
+              element={<HomePage Element={currentElement!} />}
+            />
           </Route>
         </Routes>
       </div>
