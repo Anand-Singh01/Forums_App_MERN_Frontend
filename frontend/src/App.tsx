@@ -15,6 +15,7 @@ import { useAppSelector } from "./state/hooks";
 import queryClient from "./state/tanstack/queryClient";
 import routes from "./utils/routes";
 import LikedPostsPage from "./pages/HomePage/components/likedPosts/LikedPostsPage";
+import SavedPostsPage from "./pages/HomePage/components/savedPosts/SavedPostsPage";
 
 
 axios.defaults.baseURL = "https://jsonplaceholder.typicode.com";
@@ -48,6 +49,9 @@ const App = () => {
       break;
     case "/liked":
       currentElement = <LikedPostsPage />;
+      break;
+    case "/saved":
+      currentElement = <SavedPostsPage />;
       break;
     default:
       currentElement = null;

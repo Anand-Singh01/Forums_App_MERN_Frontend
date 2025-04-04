@@ -25,6 +25,7 @@ export interface IPostInfo {
   region: string | null;
   postImage: string;
   isLiked:boolean,
+  isSaved:boolean,
   postedBy: {
     userId: string;
     userName: string;
@@ -37,7 +38,7 @@ export interface IPostInfo {
   updatedAt: Date;
 }
 
-export interface ILikedPostInfo {
-  postId: string;
-  postImage: string;
-}
+
+
+
+
