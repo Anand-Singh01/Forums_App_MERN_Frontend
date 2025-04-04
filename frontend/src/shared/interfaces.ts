@@ -36,3 +36,8 @@ export interface IPostInfo {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface ILikedPostInfo {
+  postId: string;
+  postImage: string;
+}

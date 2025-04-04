@@ -13,7 +13,7 @@ import { Input } from "../../../../../components/ui/input";
 import { IPostInfo } from "../../../../../shared/interfaces";
 import { useAppSelector } from "../../../../../state/hooks";
 import { getProfileImageSelector } from "../../../../../state/slices/userInfoSlice";
-import { queryClient } from "../../../../../state/tanstack/queryClient";
+import queryClient from "../../../../../state/tanstack/queryClient";
 
 export interface IPostData {
   caption: string;

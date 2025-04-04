@@ -1,14 +1,19 @@
 import axios from "axios";
 import { IExtendedResponse, IPostInfo } from "../shared/interfaces";
 
-export const getLikedPostsApi = async (): Promise<IPostInfo[]> => {
+export interface ILikedPostDto {
+  postId: string;
+  postImage: string;
+}
+
+export const getLikedPostsApi = async (): Promise<ILikedPostDto[]> => {
   const response = await axios.get("/like/getAllLiked", { withCredentials: true });
 
   if (response.status !== 200) {
     throw new Error("Failed to fetch liked posts");
   }
 
-  const { data } = response.data as IExtendedResponse<IPostInfo[]>;
+  const { data } = response.data as IExtendedResponse<ILikedPostDto[]>;
   return data;
 };
 

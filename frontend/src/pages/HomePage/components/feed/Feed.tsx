@@ -11,7 +11,6 @@ const Feed = () => {
   const { data: posts = [], isPending } = useQuery<IPostInfo[]>({
     queryKey: ["posts"],
     queryFn: getAllPostsApi,
-    retry: false,
   });
 
   if (isPending) {

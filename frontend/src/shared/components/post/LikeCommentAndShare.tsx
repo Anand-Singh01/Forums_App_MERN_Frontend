@@ -3,9 +3,8 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import { useState } from "react";
-import { likePostApi, unlikePostApi } from "../../../api/likePostApi";
-import { toast } from "react-toastify";
-
+import { useAppDispatch } from "../../../state/hooks";
+import { updateSelectedPostIdOnFeed } from "../../../state/slices/postSlice";
 interface LikeCommentAndShareProps {
   totalLikes: number;
   totalComments: number;
@@ -19,57 +18,32 @@ const LikeCommentAndShare = ({
   totalLikes,
 }: LikeCommentAndShareProps) => {
   const [liked, setLiked] = useState(isLiked);
-  const [likesCount, setLikesCount] = useState(totalLikes);
-  const [isLoading, setIsLoading] = useState(false);
 
-
-  const handleLikeToggle = async () => {
-    if (isLoading) return;
-
-    setIsLoading(true);
-
-    try {
-      if (liked) {
-        setLikesCount(likesCount - 1);
-        setLiked(false);
-        await unlikePostApi(postId); 
-      } else {
-        setLikesCount(likesCount + 1);
-        setLiked(true);
-        await likePostApi(postId); 
-      }
-    } catch (error) {
-      toast.error("Failed to update like status");
-      setLikesCount(likesCount);
-      setLiked(!liked);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const dispatch = useAppDispatch();
   return (
     <div>
-      <section className="flex md:gap-5 justify-end">
-        <p className="lightText">{totalComments} Comments</p>
-        <p className="lightText">{likesCount} Likes</p>
-      </section>
-
       <section className="flex md:gap-5 justify-between border-y-[1px] py-2 md:px-5">
         <div className="flex gap-2 items-center">
-          <div className="cursor-pointer" onClick={handleLikeToggle}>
+          <div className="cursor-pointer" onClick={() => setLiked(!liked)}>
             {liked ? (
               <FavoriteIcon sx={{ fontSize: "1.2rem", color: "red" }} />
             ) : (
               <FavoriteBorderOutlinedIcon sx={{ fontSize: "1.2rem" }} />
             )}
           </div>
+          <p>{totalLikes}</p>
         </div>
 
-        <div className="flex gap-2 items-center">
+        <div
+          onClick={() => dispatch(updateSelectedPostIdOnFeed(postId))}
+          className="flex gap-2 items cursor-pointer"
+        >
           <div>
             <ChatBubbleOutlineOutlinedIcon
               sx={{ color: "#6a7282", fontSize: "1.2rem" }}
             />
           </div>
+          <p>{totalComments}</p>
         </div>
 
         <div className="flex gap-2 items-center">
@@ -78,7 +52,6 @@ const LikeCommentAndShare = ({
           </div>
         </div>
       </section>
-
     </div>
   );
 };
