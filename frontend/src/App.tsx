@@ -6,16 +6,17 @@ import { ToastContainer } from "react-toastify";
 import "./index.css";
 import ViewPostContainer from "./pages/HomePage/components/feed/components/ViewPostContainer";
 import Feed from "./pages/HomePage/components/feed/Feed";
+import LikedPostsPage from "./pages/HomePage/components/likedPosts/LikedPostsPage";
+import SavedPostsPage from "./pages/HomePage/components/savedPosts/SavedPostsPage";
 import HomePage from "./pages/HomePage/HomePage";
 import LoginPage from "./pages/loginPage/LoginPage";
+import Message from "./pages/Message/Message";
 import RegisterForm from "./pages/registerPage/components/RegisterForm";
 import ModalManager from "./shared/components/ModalManager";
 import ProtectedRoutes from "./shared/protectedRoute/ProtectedRoutes";
 import { useAppSelector } from "./state/hooks";
 import queryClient from "./state/tanstack/queryClient";
 import routes from "./utils/routes";
-import LikedPostsPage from "./pages/HomePage/components/likedPosts/LikedPostsPage";
-import SavedPostsPage from "./pages/HomePage/components/savedPosts/SavedPostsPage";
 
 
 axios.defaults.baseURL = "https://jsonplaceholder.typicode.com";
@@ -53,6 +54,9 @@ const App = () => {
     case "/saved":
       currentElement = <SavedPostsPage />;
       break;
+    case "/messages":
+      currentElement = <Message />;
+      break;
     default:
       currentElement = null;
   }
@@ -66,11 +70,10 @@ const App = () => {
           <Route path={routes.login} element={<LoginPage />} />
           <Route path={routes.register} element={<RegisterForm />} />
           <Route path={routes.home} element={<ProtectedRoutes />}>
-
-          <Route path={location.pathname} element={<HomePage Element={currentElement!} />} />
-            
-
-
+            <Route
+              path={location.pathname}
+              element={<HomePage Element={currentElement!} />}
+            />
           </Route>
         </Routes>
       </div>

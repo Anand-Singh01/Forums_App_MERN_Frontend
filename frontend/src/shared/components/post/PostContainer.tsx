@@ -1,7 +1,9 @@
+import { formatDistanceToNow } from "date-fns";
 import React from "react";
 import { IPostInfo } from "../../interfaces";
 import UserGeneralInfo from "../UserGeneralInfo";
 import AddComment from "./AddComment";
+import DropdownPostMenu from './DropdownPostMenu';
 import LikeCommentAndShare from "./LikeCommentAndShare";
 import PostImage from "./PostImage";
 interface IPostContainerProps {
@@ -19,14 +21,18 @@ const PostContainer: React.FC<IPostContainerProps> = ({ post }) => {
     postId,
   } = post;
   return (
-    <div className="p-3 h-fit bg-white shadow-sm space-y-3 rounded-md">
+    <div className="p-3 h-fit bg-white relative shadow-sm space-y-3 rounded-md">
+      <DropdownPostMenu postId={postId} postedById={post.postedBy.userId}/>
       <section className="space-y-2">
         <UserGeneralInfo
           region={region}
           profileImage={profileImage}
           userName={userName}
         />
-        <div className="no-scrollbar font-medium max-h-[5rem] overflow-y-scroll text-wrap">
+        <div
+          className="no-scrollbar pl-5 max-h-[5rem] 
+        overflow-y-scroll text-wrap"
+        >
           <p> {caption}</p>
         </div>
       </section>
@@ -34,6 +40,11 @@ const PostContainer: React.FC<IPostContainerProps> = ({ post }) => {
       <section className="flex justify-center">
         <PostImage postImage={postImage} />
       </section>
+      <p className="flex justify-end text-[12px] text-gray-500">
+        {formatDistanceToNow(new Date(post.updatedAt), {
+          addSuffix: true,
+        })}
+      </p>
       <LikeCommentAndShare
         isLiked={isLiked}
         postId={postId}

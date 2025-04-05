@@ -4,6 +4,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { checkAuthApi } from "../../api/authApi";
 import { useAppDispatch, useAppSelector } from "../../state/hooks";
 import { updateAuth, updateUserInfo } from "../../state/slices/userInfoSlice";
+import WebSocketManager from "../../state/ws/webSocketManager";
 import routes from "../../utils/routes";
 import LoaderSpinner from "../components/LoaderSpinner";
 import { IUserInfo } from "../interfaces";
@@ -36,6 +37,13 @@ const ProtectedRoutes = () => {
       navigate(routes.login, { replace: true });
     }
   }, [isError, isAuthenticated, navigate]);
+
+  useEffect(() => {
+    if(isAuthenticated){
+      const wsManager = WebSocketManager.getInstance();
+      wsManager.connect();
+    }
+  }, [isAuthenticated]);
 
   if (isLoading && !isAuthenticated) {
     return <LoaderSpinner />;
