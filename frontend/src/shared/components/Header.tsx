@@ -13,20 +13,20 @@ const Header = () => {
   }));
 
   return (
-    <div className="flex justify-between items-center p-3 px-[2rem] bg-white">
-      <section className="flex gap-[5rem] w-full items-center">
-        <h2 className="whitespace-nowrap text-lg">Snap-hive</h2>
+    <div className="flex justify-between items-center p-4 px-8 bg-pink-100 shadow-md">
+      <section className="flex gap-20 w-full items-center">
+        <h2 className="text-xl font-semibold text-pink-600">Joygram</h2>
         {/* <Input
           className="md:w-[50%] w-[40%] bg-white"
           placeholder="Search friends here"
         ></Input> */}
       </section>
-      <section className="flex gap-2 items-center">
+      <section className="flex gap-3 items-center">
         {/* <Avatar>
           <AvatarImage src={profileImage.length > 0 ? profileImage : 'https://github.com/shadcn.png'}/>
           <AvatarFallback>CN</AvatarFallback>
         </Avatar> */}
-        <p className="font-medium">{userName}</p>
+        <p className="font-medium text-gray-700">{userName}</p>
         <Avatar>
           <AvatarImage src="https://github.com/shadcn.png" />
           <AvatarFallback>CN</AvatarFallback>
@@ -37,3 +37,5 @@ const Header = () => {
 };
 
 export default Header;
+
+

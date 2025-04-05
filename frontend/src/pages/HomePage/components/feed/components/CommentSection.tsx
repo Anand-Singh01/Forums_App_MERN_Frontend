@@ -65,7 +65,7 @@ const CommentSection = ({ postId }: CommentSectionProps) => {
         ({ comment, commentId, commentedBy, updatedAt, replyCount }) => (
           <div
             key={commentId}
-            className="group relative hover:bg-gray-50/50 rounded-lg p-3 transition-colors border border-gray-100"
+            className="group relative hover:bg-gray-50/50 rounded-lg p-3 transition-colors border-gray-100"
           >
             <div className="flex gap-3">
               <img

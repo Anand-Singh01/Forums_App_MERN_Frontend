@@ -39,7 +39,7 @@ const ViewPostContainer = () => {
     }
   }, [post, postId]);
 
-  if (!postId || !post) {
+  if (!postId) {
     toast.error("Post does not exist or could not be loaded.");
     dispatch(updateSelectedPostIdOnFeed(null));
     return null;
