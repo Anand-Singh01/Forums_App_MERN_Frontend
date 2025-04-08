@@ -5,17 +5,43 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../../../components/ui/dropdown-menu";
-import { useAppSelector } from "../../../state/hooks";
+import { useAppDispatch, useAppSelector } from "../../../state/hooks";
+import { useState } from "react";
+import { savePostApi, unsavePostApi } from "../../../api/savePostApi";
 
 interface IDropdownMenuProps {
   postId: string;
   postedById: string;
+  isSaved: boolean;
 }
-const DropdownPostMenu = ({ postId, postedById }: IDropdownMenuProps) => {
+
+const DropdownPostMenu = ({
+  postId,
+  postedById,
+  isSaved,
+}: IDropdownMenuProps) => {
   const currentUserId = useAppSelector(
     (state) => state.userInfoSlice.userInfo.userId
   );
-  console.log(currentUserId, "  ", postedById);
+  const [saved, setSaved] = useState(isSaved);
+
+  const handleSaveClick = async () => {
+    const newSaved = !saved;
+    setSaved(newSaved);
+
+    try {
+      if (newSaved) {
+        await savePostApi(postId);
+      } else {
+        await unsavePostApi(postId);
+      }
+    } catch (error) {
+      console.error("Error saving/unsaving post:", error);
+      setSaved(!newSaved); 
+    }
+  };
+
+
   return (
     <div
       className={`absolute top-2 right-2 cursor-pointer z-10 bg-white/80 
@@ -26,7 +52,7 @@ const DropdownPostMenu = ({ postId, postedById }: IDropdownMenuProps) => {
           <MoreVertIcon sx={{ color: "gray" }} />
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuItem>Save</DropdownMenuItem>
+          <DropdownMenuItem onClick={handleSaveClick}>{saved ? "Unsave" : "Save"}</DropdownMenuItem>
           {currentUserId === postedById && (
             <DropdownMenuItem>Edit</DropdownMenuItem>
           )}
@@ -37,6 +63,6 @@ const DropdownPostMenu = ({ postId, postedById }: IDropdownMenuProps) => {
       </DropdownMenu>
     </div>
   );
-};
+}
 
 export default DropdownPostMenu;

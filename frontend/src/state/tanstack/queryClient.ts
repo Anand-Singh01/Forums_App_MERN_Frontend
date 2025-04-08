@@ -110,4 +110,38 @@ export const qcChangeFollowStateInSuggestions = (friendId:string) => {
     }
   );
 };
+
+
+export const qcUpdateLikeStatus = (postId: string) => {
+  queryClient.setQueryData(["posts"], (prevData: IPostInfo[] | undefined) => {
+    if (!prevData) {
+      return [];
+    }
+
+    const newData = [...prevData];
+    const index = newData.findIndex((p) => p.postId === postId);
+    if (index === -1) {
+      return newData;
+    }
+
+    const targetPost = newData[index];
+    const isLiked = !targetPost.isLiked;
+    const totalLikes = isLiked
+      ? targetPost.totalLikes + 1
+      : targetPost.totalLikes - 1;
+
+    newData[index] = {
+      ...targetPost,
+      isLiked,
+      totalLikes,
+    };
+
+    return newData;
+  });
+};
+
+
 export default queryClient;
+
+
+
