@@ -4,12 +4,12 @@ import LoaderSpinner from "../../../../shared/components/LoaderSpinner";
 import PostContainer from "../../../../shared/components/post/PostContainer";
 import { IPostInfo } from "../../../../shared/interfaces";
 import AddPost from "./components/AddPost";
-import Notifications from "./components/Notifications";
 import Suggestions from "./components/Suggestions";
 
 const Feed = () => {
   const { data: posts = [], isPending } = useQuery<IPostInfo[]>({
     queryKey: ["posts"],
+    refetchOnWindowFocus: false,
     queryFn: getAllPostsApi,
   });
 
@@ -53,7 +53,7 @@ const Feed = () => {
         <div className="sticky top-0 p-4 h-[calc(100vh-100px)] 
         space-y-3 overflow-y-auto">
           <Suggestions/>
-          <Notifications/>
+          {/* <Notifications/> */}
         </div>
       </aside>
     </div>

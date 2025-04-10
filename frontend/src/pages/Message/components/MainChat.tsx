@@ -26,7 +26,7 @@ const MainChat = () => {
   }
   return (
     <div className="flex w-full">
-      <section className="border-r-[1px] w-full">
+      <section className="w-full">
         <ChatArea conversation={data} />
       </section>
       <section className="w-[25rem]">
