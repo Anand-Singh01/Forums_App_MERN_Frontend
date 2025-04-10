@@ -19,6 +19,16 @@ export interface IUserLogin {
   password: string;
 }
 
+
+export interface IUserRegister {
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  userName: string;
+  dob: Date;
+}
+
 export interface IPostInfo {
   postId: string;
   caption: string;

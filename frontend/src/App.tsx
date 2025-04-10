@@ -10,8 +10,8 @@ import LikedPostsPage from "./pages/HomePage/components/likedPosts/LikedPostsPag
 import SavedPostsPage from "./pages/HomePage/components/savedPosts/SavedPostsPage";
 import HomePage from "./pages/HomePage/HomePage";
 import LoginPage from "./pages/loginPage/LoginPage";
+import SignUpPage from "./pages/signUpPage/SignUpPage";
 import Message from "./pages/Message/Message";
-import RegisterForm from "./pages/registerPage/components/RegisterForm";
 import ModalManager from "./shared/components/ModalManager";
 import ProtectedRoutes from "./shared/protectedRoute/ProtectedRoutes";
 import { useAppSelector } from "./state/hooks";
@@ -68,7 +68,7 @@ const App = () => {
         <ModalManager isVisible={!!modalComponent} Component={modalComponent} />
         <Routes>
           <Route path={routes.login} element={<LoginPage />} />
-          <Route path={routes.register} element={<RegisterForm />} />
+          <Route path={routes.register} element={<SignUpPage />} />
           <Route path={routes.home} element={<ProtectedRoutes />}>
             <Route
               path={location.pathname}
