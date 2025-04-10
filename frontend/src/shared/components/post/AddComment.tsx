@@ -31,7 +31,6 @@ const AddComment = ({ profileImage, postId }: IAddCommentProps) => {
   return (
     <div className="flex justify-between items-center gap-2">
       <div className="flex gap-2 items-center grow">
-        <div className="size-10">{<img src={profileImage} alt="" />}</div>
         <Input
           value={comment}
           onChange={(e) => setComment(e.target.value)}

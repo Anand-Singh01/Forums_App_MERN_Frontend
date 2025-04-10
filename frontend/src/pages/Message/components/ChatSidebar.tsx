@@ -24,7 +24,7 @@ const ChatSidebar = () => {
     }
   }, [inputText, queryRes.data]);
   return (
-    <div className="border-r-[1px] w-[20rem] pt-2 px-5 flex flex-col gap-5">
+    <div className="w-[20rem] h-full pt-2 px-5 flex flex-col gap-5">
       <Input
         value={inputText}
         onChange={(e) => setInputText(e.target.value)}
