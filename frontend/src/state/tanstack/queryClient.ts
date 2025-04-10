@@ -110,4 +110,21 @@ export const qcChangeFollowStateInSuggestions = (friendId:string) => {
     }
   );
 };
+
+export const qcUpdatePostInCache = (post: IPostInfo) => {
+  const { postId } = post;
+
+  // Update list
+  queryClient.setQueryData<IPostInfo[]>(['posts'], (oldPosts = []) =>
+    oldPosts.map(p => (p.postId === postId ? post : p))
+  );
+};
+
+export const qcDeletePostInCache = (postId:string) => {
+  // Update list
+  queryClient.setQueryData<IPostInfo[]>(['posts'], (oldPosts = []) =>
+    oldPosts.filter(p => (p.postId !== postId ))
+  );
+};
+
 export default queryClient;

@@ -17,7 +17,7 @@ const UserGeneralInfo: React.FC<IUserGeneralInfo> = ({
           className="w-8 h-8 rounded-full object-cover mt-1 flex-shrink-0"
           src={profileImage}
           onError={(e) => {
-            (e.target as HTMLImageElement).src = "/default-profile.png";
+            (e.target as HTMLImageElement).src = "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
           }}
         />
         <div>

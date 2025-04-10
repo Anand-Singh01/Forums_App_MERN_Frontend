@@ -13,18 +13,24 @@ import LoginPage from "./pages/loginPage/LoginPage";
 import Message from "./pages/Message/Message";
 import RegisterForm from "./pages/registerPage/components/RegisterForm";
 import ModalManager from "./shared/components/ModalManager";
+import DeletePostContainer from "./shared/components/post/DeletePostContainer";
+import UpdatePostContainer from "./shared/components/post/UpdatePostContainer";
 import ProtectedRoutes from "./shared/protectedRoute/ProtectedRoutes";
 import { useAppSelector } from "./state/hooks";
 import queryClient from "./state/tanstack/queryClient";
 import routes from "./utils/routes";
 import ProfilePage from "./pages/ProfilePage/profilePage";
 
-
 axios.defaults.baseURL = "https://jsonplaceholder.typicode.com";
 const App = () => {
-  const { isSelectedPostOnFeedVisible } = useAppSelector((state) => ({
-    isSelectedPostOnFeedVisible: state.postSlice.selectedPostIdOnFeed !== null,
-  }));
+  const { isSelectedPostOnFeedVisible, isUpdatePostContainerVisible, isDeletePostContainerVisible } =
+    useAppSelector((state) => ({
+      isSelectedPostOnFeedVisible:
+        state.postSlice.selectedPostIdOnFeed !== null,
+      isUpdatePostContainerVisible:
+        state.postSlice.selectedPostToEdit.postId !== null,
+        isDeletePostContainerVisible:state.postSlice.selectedPostToDelete.postId !== null
+    }));
 
   let modalComponent: React.FC | null = null;
 
@@ -32,16 +38,23 @@ const App = () => {
     case isSelectedPostOnFeedVisible:
       modalComponent = ViewPostContainer;
       break;
+    case isUpdatePostContainerVisible:
+      modalComponent = UpdatePostContainer;
+      break;
+      case isDeletePostContainerVisible:
+        modalComponent = DeletePostContainer;
+        break;
     default:
       modalComponent = null;
   }
 
   useEffect(() => {
-    const isVisible = isSelectedPostOnFeedVisible;
+    const isVisible =
+      isSelectedPostOnFeedVisible || isUpdatePostContainerVisible || isDeletePostContainerVisible;
     if (isVisible) {
       document.body.style.overflow = "hidden";
     }
-  }, [isSelectedPostOnFeedVisible]);
+  }, [isDeletePostContainerVisible, isSelectedPostOnFeedVisible, isUpdatePostContainerVisible]);
 
 
   const location = useLocation();

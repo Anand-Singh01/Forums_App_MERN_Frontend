@@ -27,7 +27,7 @@ const ChatArea: React.FC<IChatArea> = ({ conversation }) => {
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-6rem)]">
+    <div className="flex flex-col h-[calc(100vh-6rem)] bg-gradient-to-br from-pink-50 to-gray-100">
       {/* Messages container */}
       <div
         ref={chatContainerRef}
