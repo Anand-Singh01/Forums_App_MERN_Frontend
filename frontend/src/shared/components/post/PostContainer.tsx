@@ -6,11 +6,16 @@ import AddComment from "./AddComment";
 import DropdownPostMenu from './DropdownPostMenu';
 import LikeCommentAndShare from "./LikeCommentAndShare";
 import PostImage from "./PostImage";
+import { useNavigate } from "react-router";
+import { updateselectedUserProfileIdId } from "../../../state/slices/postSlice";
+import { useAppDispatch } from "../../../state/hooks";
 interface IPostContainerProps {
   post: IPostInfo;
 }
 const PostContainer: React.FC<IPostContainerProps> = ({ post }) => {
   const { profileImage, userName } = post.postedBy;
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const {
     region,
     postImage,
@@ -23,7 +28,10 @@ const PostContainer: React.FC<IPostContainerProps> = ({ post }) => {
   return (
     <div className="p-3 h-fit bg-white relative shadow-sm space-y-3 rounded-md">
       <DropdownPostMenu postId={postId} postedById={post.postedBy.userId}/>
-      <section className="space-y-2">
+      <section onClick={() => {
+                      dispatch(updateselectedUserProfileIdId(post.postedBy.userId))
+                      navigate("/profile");
+      }} className="space-y-2 cursor-pointer">
         <UserGeneralInfo
           region={region}
           profileImage={profileImage}

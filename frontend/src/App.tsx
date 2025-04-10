@@ -1,7 +1,7 @@
 import { QueryClientProvider } from "@tanstack/react-query";
 import axios from "axios";
 import React, { ReactNode, useEffect } from "react";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes, useLocation, useParams } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "./index.css";
 import ViewPostContainer from "./pages/HomePage/components/feed/components/ViewPostContainer";
@@ -17,6 +17,7 @@ import ProtectedRoutes from "./shared/protectedRoute/ProtectedRoutes";
 import { useAppSelector } from "./state/hooks";
 import queryClient from "./state/tanstack/queryClient";
 import routes from "./utils/routes";
+import ProfilePage from "./pages/ProfilePage/profilePage";
 
 
 axios.defaults.baseURL = "https://jsonplaceholder.typicode.com";
@@ -42,11 +43,15 @@ const App = () => {
     }
   }, [isSelectedPostOnFeedVisible]);
 
+
   const location = useLocation();
   let currentElement: ReactNode = null;
   switch (location.pathname) {
     case "/":
       currentElement = <Feed />;
+      break;
+      case `/profile`:
+        currentElement = <ProfilePage />;
       break;
     case "/liked":
       currentElement = <LikedPostsPage />;
@@ -70,10 +75,9 @@ const App = () => {
           <Route path={routes.login} element={<LoginPage />} />
           <Route path={routes.register} element={<RegisterForm />} />
           <Route path={routes.home} element={<ProtectedRoutes />}>
-            <Route
-              path={location.pathname}
-              element={<HomePage Element={currentElement!} />}
-            />
+          <Route path={location.pathname} element={<HomePage Element={currentElement!} />}/>
+          <Route path={`${routes.profile}`} element={<HomePage Element={<ProfilePage />} />} />
+
           </Route>
         </Routes>
       </div>
