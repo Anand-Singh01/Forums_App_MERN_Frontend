@@ -126,4 +126,5 @@ export const qcDeletePostInCache = (postId:string) => {
     oldPosts.filter(p => (p.postId !== postId ))
   );
 };
+
 export default queryClient;

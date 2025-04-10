@@ -40,3 +40,16 @@ export const getGeneralUserInfo = async (
   const { data } = response.data as IExtendedResponse<IUserGeneralInfo>;
   return data;
 };
+
+export const getUsersByKeywords = async (
+  key: string
+): Promise<IUserGeneralInfo[]> => {
+  const response = await axios.get(`/user/search-accounts/${key}`, {
+    withCredentials: true,
+  });
+  if (response.status !== 200) {
+    throw new Error("Failed to fetch users");
+  }
+  const { data } = response.data as IExtendedResponse<IUserGeneralInfo[]>;
+  return data;
+};

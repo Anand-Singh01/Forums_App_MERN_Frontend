@@ -21,14 +21,14 @@ const Header = () => {
           placeholder="Search friends here"
         ></Input> */}
       </section>
-      <section className="flex gap-3 items-center">
+      <section className="flex justify-end gap-3 items-center w-full">
         {/* <Avatar>
           <AvatarImage src={profileImage.length > 0 ? profileImage : 'https://github.com/shadcn.png'}/>
           <AvatarFallback>CN</AvatarFallback>
         </Avatar> */}
         <p className="font-medium text-gray-700">{userName}</p>
         <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" />
+          <AvatarImage className="object-cover" src={profileImage || "https://github.com/shadcn.png"} />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
       </section>
