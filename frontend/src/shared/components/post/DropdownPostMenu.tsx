@@ -5,17 +5,14 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../../../components/ui/dropdown-menu";
-import { useAppSelector } from "../../../state/hooks";
+import { useAppDispatch } from "../../../state/hooks";
+import { updateSelectedPostToDelete, updateSelectedPostToEdit } from "../../../state/slices/postSlice";
 
-interface IDropdownMenuProps {
+interface DropdownPostMenuProps {
   postId: string;
-  postedById: string;
 }
-const DropdownPostMenu = ({ postId, postedById }: IDropdownMenuProps) => {
-  const currentUserId = useAppSelector(
-    (state) => state.userInfoSlice.userInfo.userId
-  );
-  console.log(currentUserId, "  ", postedById);
+const DropdownPostMenu = ({ postId }: DropdownPostMenuProps) => {
+  const dispatch = useAppDispatch();
   return (
     <div
       className={`absolute top-2 right-2 cursor-pointer z-10 bg-white/80 
@@ -26,13 +23,14 @@ const DropdownPostMenu = ({ postId, postedById }: IDropdownMenuProps) => {
           <MoreVertIcon sx={{ color: "gray" }} />
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuItem>Save</DropdownMenuItem>
-          {currentUserId === postedById && (
-            <DropdownMenuItem>Edit</DropdownMenuItem>
-          )}
-          {currentUserId === postedById && (
-            <DropdownMenuItem className="text-red-400">Delete</DropdownMenuItem>
-          )}
+          <DropdownMenuItem
+            onClick={() => dispatch(updateSelectedPostToEdit(postId))}
+          >
+            Edit
+          </DropdownMenuItem>
+          <DropdownMenuItem 
+          onClick={() => dispatch(updateSelectedPostToDelete(postId))} className="text-red-400"
+          >Delete</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

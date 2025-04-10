@@ -50,7 +50,7 @@ const SelectedUserInfo = () => {
   const { email, joinedOn, profilePicture, userName } = userInfo;
 
   return (
-    <div className="px-5 py-6 space-y-6 max-w-md mx-auto">
+    <div className="px-5 py-6 space-y-6 max-w-md mx-auto ">
       <div className="flex flex-col items-center">
         <img
           className="size-32 rounded-full object-cover border-2 border-gray-200"

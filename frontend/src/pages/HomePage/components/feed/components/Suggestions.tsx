@@ -10,6 +10,7 @@ const Suggestions = () => {
   const { data = [], isPending: isFetchingSuggestions } = useQuery({
     queryKey: ["suggestions"],
     queryFn: getAllUserSuggestions,
+    retry:false,
   });
 
   const [selectedButton, setSelectedButton] = useState<string | null>(null);

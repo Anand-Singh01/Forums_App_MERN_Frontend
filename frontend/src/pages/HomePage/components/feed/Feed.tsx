@@ -10,6 +10,7 @@ import Suggestions from "./components/Suggestions";
 const Feed = () => {
   const { data: posts = [], isPending } = useQuery<IPostInfo[]>({
     queryKey: ["posts"],
+    refetchOnWindowFocus: false,
     queryFn: getAllPostsApi,
   });
 
