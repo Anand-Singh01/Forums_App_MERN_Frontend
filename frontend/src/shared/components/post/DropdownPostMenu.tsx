@@ -5,17 +5,13 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../../../components/ui/dropdown-menu";
-import { useAppDispatch } from "../../../state/hooks";
+import { useAppDispatch,useAppSelector } from "../../../state/hooks";
 import { updateSelectedPostToDelete, updateSelectedPostToEdit } from "../../../state/slices/postSlice";
 import { useState } from "react";
 import { savePostApi, unsavePostApi } from "../../../api/savePostApi";
 
-interface DropdownPostMenuProps {
+interface IDropdownMenuProps {
   postId: string;
-}
-const DropdownPostMenu = ({ postId }: DropdownPostMenuProps) => {
-  
-  const dispatch = useAppDispatch();
   postedById: string;
   isSaved: boolean;
 }
@@ -25,6 +21,8 @@ const DropdownPostMenu = ({
   postedById,
   isSaved,
 }: IDropdownMenuProps) => {
+  const [saved, setSaved] = useState(isSaved);
+  const dispatch = useAppDispatch();
   const currentUserId = useAppSelector(
     (state) => state.userInfoSlice.userInfo.userId
   );
