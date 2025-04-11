@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { getAllFollowers } from "../../../api/follower-followApi";
 import {
   Popover,
@@ -9,6 +9,8 @@ import {
 import LoaderSpinner from "../../../shared/components/LoaderSpinner";
 import { leftSideBarLinks } from "../../../utils/util";
 import SearchAccounts from "./feed/components/SearchAccounts";
+import { updateselectedUserProfileIdId } from "../../../state/slices/postSlice";
+import { useAppDispatch, useAppSelector } from "../../../state/hooks";
 
 interface Follower {
   profilePicture: string;
@@ -26,7 +28,10 @@ const LeftSideBar = () => {
     initialData: [],
     retry: 2,
   });
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
+  const currentUserId = useAppSelector(state => state.userInfoSlice.userInfo.userId);
   let currentElement:
     | "Feed"
     | "Search"
@@ -61,6 +66,10 @@ const LeftSideBar = () => {
             <Link
               key={path || index}
               to={path}
+              onClick={()=>{
+                 dispatch(updateselectedUserProfileIdId(currentUserId))
+                navigate("/profile");
+              }}
               className="flex py-3 px-5 hover:bg-blue-50 gap-3 items-center transition-colors duration-200 rounded mx-2"
             >
               <Icon
@@ -113,7 +122,7 @@ const LeftSideBar = () => {
             My Followers ({followers.length})
           </h3>
 
-          <div className="space-y-3">
+          <div className="space-y-3 cursor-pointer">
             {isFetchingFollowers ? (
               <LoaderSpinner />
             ) : isError ? (
@@ -122,8 +131,11 @@ const LeftSideBar = () => {
               <p className="text-gray-500 text-sm">No followers yet</p>
             ) : (
               followers.map(({ profilePicture, userId, userName }) => (
-                <Link
-                  to={`/profile/${userId}`}
+                <div
+                onClick={()=>{
+                  dispatch(updateselectedUserProfileIdId(userId))
+                  navigate("/profile");
+                }}
                   key={userId}
                   className="flex gap-2 items-center hover:bg-gray-50
                  p-2 rounded transition-colors"
@@ -133,7 +145,7 @@ const LeftSideBar = () => {
                     className="w-8 h-8 rounded-full object-cover"
                   />
                   <span className="truncate">{userName}</span>
-                </Link>
+                </div>
               ))
             )}
           </div>

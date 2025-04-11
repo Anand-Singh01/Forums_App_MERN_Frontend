@@ -70,7 +70,7 @@ const SearchAccounts = () => {
           {users.map(({ userName, profilePicture }) => (
             <Link
               key={userName}
-              to={`/profile/${userName}`}
+              to={`/profile`}
               className="flex items-center gap-3 p-2 
               hover:bg-accent rounded-lg transition-colors"
             >

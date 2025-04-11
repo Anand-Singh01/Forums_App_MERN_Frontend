@@ -4,9 +4,14 @@ import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import MapsUgcOutlinedIcon from '@mui/icons-material/MapsUgcOutlined';
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 export const leftSideBarLinks = [
+  {
+    Icon: AccountCircleIcon,
+    path: `/profile`,
+    title: "Profile",
+  },
   {
     Icon: HomeOutlinedIcon,
     path: "/",
@@ -38,6 +43,6 @@ export const leftSideBarLinks = [
     path: "/settings",
     title: "Settings",
   },
-  
-  
+
+
 ];

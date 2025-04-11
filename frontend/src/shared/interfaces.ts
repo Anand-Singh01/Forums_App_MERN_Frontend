@@ -48,6 +48,23 @@ export interface IPostInfo {
   updatedAt: Date;
 }
 
+export interface IProfile {
+  _id: string;
+  profileName: string;
+  profilePicture: string;
+  profileDescription: string;
+  user: string;
+  followersCount?: number;
+  followingCount?: number;
+  postsCount?: number;
+}
+
+export interface IProfileResponse {
+  message: string;
+  status: boolean;
+  statusCode: number;
+  data: IProfile;
+}
 
 
 
