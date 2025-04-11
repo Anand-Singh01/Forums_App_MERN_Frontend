@@ -1,7 +1,7 @@
 import React from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { Button } from "../../../components/ui/button";
-import { Input } from "../../../components/ui/input";
+import Input from "../../../components/ui/signUpInput";
 import { Label } from "../../../components/ui/label";
 import LoaderSpinner from "../../../shared/components/LoaderSpinner";
 import { IUserRegister } from "../../../shared/interfaces";
