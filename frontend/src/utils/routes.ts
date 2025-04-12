@@ -3,6 +3,10 @@ const routes = {
     login: "/login",
     register:"/register",
     profile: "/profile",
+    settings: "/settings",
+    messages: "/messages",
+    search: "/search",
+    
     //liked: "/liked",
     //saved: "/saved",
 };

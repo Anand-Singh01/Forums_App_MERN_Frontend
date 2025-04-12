@@ -33,6 +33,7 @@ const LeftSideBar = () => {
 
   const currentUserId = useAppSelector(state => state.userInfoSlice.userInfo.userId);
   let currentElement:
+    | "Profile"
     | "Feed"
     | "Search"
     | "Messages"
@@ -46,8 +47,20 @@ const LeftSideBar = () => {
     case "/":
       currentElement = "Feed";
       break;
+      case "/search":
+      currentElement = "Search";
+      break;
     case "/liked":
       currentElement = "My Liked";
+      break;
+      case "/saved":
+      currentElement = "My Saved";
+      break;
+      case "/profile":
+      currentElement = "Profile";
+      break;
+      case "/settings":
+      currentElement = "Settings";
       break;
     case "/messages":
       currentElement = "Messages";

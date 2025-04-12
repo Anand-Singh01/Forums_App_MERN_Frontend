@@ -9,6 +9,8 @@ import { ProfilePosts } from "./components/ProfilePosts";
 import { ProfileSaved } from "./components/ProfileSaved";
 import { ProfileLiked } from "./components/ProfileLiked";
 import { useAppSelector } from "../../state/hooks";
+import LikedPostsPage from "../HomePage/components/likedPosts/LikedPostsPage";
+import SavedPostsPage from "../HomePage/components/savedPosts/SavedPostsPage";
 
 const ProfilePage = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -34,8 +36,8 @@ const ProfilePage = () => {
         />
         
         {activeTab === 0 && <ProfilePosts posts={[]} />}
-        {activeTab === 1 && <ProfileSaved />}
-        {activeTab === 2 && <ProfileLiked />}
+        {activeTab === 1 && <SavedPostsPage />}
+        {activeTab === 2 && <LikedPostsPage />}
       </div>
     </Layout>
   );
