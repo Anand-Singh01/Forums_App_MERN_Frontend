@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { IProfileResponse } from "../shared/interfaces";
 
@@ -31,5 +31,18 @@ export const useGetUserProfile = (userId?: string) => {
       return response.data;
     },
     enabled: !!userId 
+  });
+};
+
+export const useUpdateProfile = () => {
+  return useMutation({
+    mutationFn: async ({ userId, formData }: { userId: string; formData: FormData }) => {
+      const response = await axios.put(`/profile/update-profile`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      return response.data;
+    },
   });
 };
