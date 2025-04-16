@@ -11,6 +11,7 @@ import { updatesSelectedCommentForReply } from "../../../../../state/slices/post
 import {
   qcAddComment,
   qcAddReply,
+  qcUpdateCommentCount,
   qcUpdateReplyCount,
 } from "../../../../../state/tanstack/queryClient";
 
@@ -35,6 +36,7 @@ const AddCommentInput = ({ postId }: AddCommentInputProps) => {
       addCommentApi(obj.postId, obj.comment),
     onSuccess: (newComment) => {
       qcAddComment(newComment, postId);
+      qcUpdateCommentCount(postId);
       setComment("");
       toast.success("Comment added successfully!");
       inputRef.current?.focus();

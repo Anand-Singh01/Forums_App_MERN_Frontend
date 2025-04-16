@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { Loader2, Search } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { getUsersByKeywords } from "../../../../../api/userApi";
 import {
   Avatar,
@@ -9,11 +9,14 @@ import {
   AvatarImage,
 } from "../../../../../components/ui/avatar";
 import { Input } from "../../../../../components/ui/input";
+import { useAppDispatch } from "../../../../../state/hooks";
+import { updateselectedUserProfileIdId } from "../../../../../state/slices/postSlice";
 
 const SearchAccounts = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedTerm, setDebouncedTerm] = useState("");
-
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const {
     mutate,
     isPending,
@@ -66,11 +69,14 @@ const SearchAccounts = () => {
       )}
 
       {!isPending && !isError && users.length > 0 && (
-        <div className="space-y-2">
-          {users.map(({ userName, profilePicture }) => (
-            <Link
+        <div className="space-y-2 cursor-pointer">
+          {users.map(({ userName, profilePicture, userId }) => (
+            <div
               key={userName}
-              to={`/profile`}
+              onClick={() => {
+                dispatch(updateselectedUserProfileIdId(userId));
+                navigate("/profile");
+              }}
               className="flex items-center gap-3 p-2 
               hover:bg-accent rounded-lg transition-colors"
             >
@@ -83,7 +89,7 @@ const SearchAccounts = () => {
               <div>
                 <p className="font-medium">{userName}</p>
               </div>
-            </Link>
+            </div>
           ))}
         </div>
       )}

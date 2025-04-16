@@ -1,20 +1,21 @@
 import { formatDistanceToNow } from "date-fns";
 import React from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../../state/hooks";
+import { updateselectedUserProfileIdId } from "../../../state/slices/postSlice";
 import { IPostInfo } from "../../interfaces";
 import UserGeneralInfo from "../UserGeneralInfo";
 import AddComment from "./AddComment";
 import DropdownPostMenu from "./DropdownPostMenu";
 import LikeCommentAndShare from "./LikeCommentAndShare";
 import PostImage from "./PostImage";
-import { updateselectedUserProfileIdId } from "../../../state/slices/postSlice";
-import { useNavigate } from "react-router";
-import { useDispatch } from "react-redux";
 interface IPostContainerProps {
   post: IPostInfo;
 }
 const PostContainer: React.FC<IPostContainerProps> = ({ post }) => {
   const { profileImage, userName } = post.postedBy;
+  const navigate = useNavigate();
   const currentUserId = useAppSelector(
     (state) => state.userInfoSlice.userInfo.userId
   );
@@ -28,11 +29,11 @@ const PostContainer: React.FC<IPostContainerProps> = ({ post }) => {
     postId,
   } = post;
 
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   return (
     <div className="p-3 h-fit bg-white relative shadow-sm space-y-3 rounded-md">
-      {currentUserId === post.postedBy.userId && <DropdownPostMenu postId={post.postId}/>}
+      {currentUserId === post.postedBy.userId && 
+      <DropdownPostMenu postId={post.postId} postedById={post.postedBy.userId} isSaved={post.isSaved}/>}
       <section onClick={() => {
         dispatch(updateselectedUserProfileIdId(post.postedBy.userId))
         navigate("/profile");

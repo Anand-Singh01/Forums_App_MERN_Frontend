@@ -1,7 +1,7 @@
 import { QueryClientProvider } from "@tanstack/react-query";
 import axios from "axios";
 import React, { ReactNode, useEffect } from "react";
-import { Route, Routes, useLocation, useParams } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "./index.css";
 import ViewPostContainer from "./pages/HomePage/components/feed/components/ViewPostContainer";
@@ -10,8 +10,9 @@ import LikedPostsPage from "./pages/HomePage/components/likedPosts/LikedPostsPag
 import SavedPostsPage from "./pages/HomePage/components/savedPosts/SavedPostsPage";
 import HomePage from "./pages/HomePage/HomePage";
 import LoginPage from "./pages/loginPage/LoginPage";
-import SignUpPage from "./pages/signUpPage/SignUpPage";
 import Message from "./pages/Message/Message";
+import ProfilePage from "./pages/ProfilePage/profilePage";
+import SignUpPage from "./pages/signUpPage/SignUpPage";
 import ModalManager from "./shared/components/ModalManager";
 import DeletePostContainer from "./shared/components/post/DeletePostContainer";
 import UpdatePostContainer from "./shared/components/post/UpdatePostContainer";
@@ -19,7 +20,6 @@ import ProtectedRoutes from "./shared/protectedRoute/ProtectedRoutes";
 import { useAppSelector } from "./state/hooks";
 import queryClient from "./state/tanstack/queryClient";
 import routes from "./utils/routes";
-import ProfilePage from "./pages/ProfilePage/profilePage";
 
 axios.defaults.baseURL = "https://jsonplaceholder.typicode.com";
 const App = () => {

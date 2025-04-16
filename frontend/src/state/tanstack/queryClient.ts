@@ -111,7 +111,6 @@ export const qcChangeFollowStateInSuggestions = (friendId:string) => {
   );
 };
 
-
 export const qcUpdateLikeStatus = (postId: string) => {
   queryClient.setQueryData(["posts"], (prevData: IPostInfo[] | undefined) => {
     if (!prevData) {
@@ -140,8 +139,6 @@ export const qcUpdateLikeStatus = (postId: string) => {
   });
 };
 
-
-
 export const qcUpdatePostInCache = (post: IPostInfo) => {
   const { postId } = post;
 
@@ -157,7 +154,6 @@ export const qcDeletePostInCache = (postId:string) => {
     oldPosts.filter(p => (p.postId !== postId ))
   );
 };
-
 
 export default queryClient;
 

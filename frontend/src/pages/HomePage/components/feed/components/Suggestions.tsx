@@ -9,8 +9,7 @@ import { qcChangeFollowStateInSuggestions } from "../../../../../state/tanstack/
 const Suggestions = () => {
   const { data = [], isPending: isFetchingSuggestions } = useQuery({
     queryKey: ["suggestions"],
-    queryFn: getAllUserSuggestions,
-    retry:false,
+    queryFn: getAllUserSuggestions
   });
 
   const [selectedButton, setSelectedButton] = useState<string | null>(null);

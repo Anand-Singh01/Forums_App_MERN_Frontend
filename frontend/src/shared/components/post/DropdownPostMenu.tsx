@@ -1,14 +1,13 @@
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { useState } from "react";
+import { savePostApi, unsavePostApi } from "../../../api/savePostApi";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../../../components/ui/dropdown-menu";
-import { useAppDispatch,useAppSelector } from "../../../state/hooks";
-import { updateSelectedPostToDelete, updateSelectedPostToEdit } from "../../../state/slices/postSlice";
-import { useState } from "react";
-import { savePostApi, unsavePostApi } from "../../../api/savePostApi";
+import { useAppDispatch, useAppSelector } from "../../../state/hooks";
 
 interface IDropdownMenuProps {
   postId: string;
@@ -61,14 +60,6 @@ const DropdownPostMenu = ({
           {currentUserId === postedById && (
             <DropdownMenuItem className="text-red-400">Delete</DropdownMenuItem>
           )}
-          <DropdownMenuItem
-            onClick={() => dispatch(updateSelectedPostToEdit(postId))}
-          >
-            Edit
-          </DropdownMenuItem>
-          <DropdownMenuItem 
-          onClick={() => dispatch(updateSelectedPostToDelete(postId))} className="text-red-400"
-          >Delete</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>
