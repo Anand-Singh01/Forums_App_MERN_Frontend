@@ -13,7 +13,7 @@ const ProfilePage = () => {
   const [activeTab, setActiveTab] = useState(0);
   const userId = useAppSelector(state => state.postSlice.selectedUserProfileId);
   const currentUserId = useAppSelector(state => state.userInfoSlice.userInfo.userId);
-  const { data: profileResponse, isLoading, error } = useGetUserProfile(userId || "");
+  const { data: profileResponse, isLoading, error, refetch } = useGetUserProfile(userId || "");
   const isCurrentUser = userId === currentUserId;
 
   if (isLoading) return <LoaderSpinner />;
@@ -25,7 +25,8 @@ const ProfilePage = () => {
       <div className="max-w-4xl mx-auto p-4">
         <ProfileHeader 
           profile={profileResponse.data} 
-          isCurrentUser={isCurrentUser} 
+          isCurrentUser={isCurrentUser}
+          refetchProfile={refetch}
         />
         <ProfileTabs 
           value={activeTab} 
