@@ -48,6 +48,9 @@ const AddPost = () => {
         if (!prevData) {
           return [addedPost];
         }
+        console.log(addedPost);
+        console.log("*****");
+        console.log(prevData);
         return [addedPost, ...prevData];
       });
       // Reset form on success

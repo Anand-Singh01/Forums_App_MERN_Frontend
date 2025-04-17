@@ -54,3 +54,16 @@ export const getUsersByKeywords = async (
   const { data } = response.data as IExtendedResponse<IUserGeneralInfo[]>;
   return data;
 };
+
+
+export const updateFollowApi = async (
+  friendId: string
+): Promise<void> => {
+  const response = await axios.get(`/follow/update-follow/${friendId}`, {
+    withCredentials: true,
+  });
+  if (response.status !== 200) {
+    throw new Error("Failed to fetch users");
+  }
+  return;
+};
