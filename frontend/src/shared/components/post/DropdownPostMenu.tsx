@@ -8,6 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "../../../components/ui/dropdown-menu";
 import { useAppDispatch, useAppSelector } from "../../../state/hooks";
+import { updateSelectedPostToDelete, updateSelectedPostToEdit } from "../../../state/slices/postSlice";
 
 interface IDropdownMenuProps {
   postId: string;
@@ -21,10 +22,10 @@ const DropdownPostMenu = ({
   isSaved,
 }: IDropdownMenuProps) => {
   const [saved, setSaved] = useState(isSaved);
-  const dispatch = useAppDispatch();
   const currentUserId = useAppSelector(
     (state) => state.userInfoSlice.userInfo.userId
   );
+  const dispatch = useAppDispatch();
 
   const handleSaveClick = async () => {
     const newSaved = !saved;
@@ -55,10 +56,10 @@ const DropdownPostMenu = ({
         <DropdownMenuContent>
           <DropdownMenuItem onClick={handleSaveClick}>{saved ? "Unsave" : "Save"}</DropdownMenuItem>
           {currentUserId === postedById && (
-            <DropdownMenuItem>Edit</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => dispatch(updateSelectedPostToEdit(postId))}>Edit</DropdownMenuItem>
           )}
           {currentUserId === postedById && (
-            <DropdownMenuItem className="text-red-400">Delete</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => dispatch(updateSelectedPostToDelete(postId))} className="text-red-400" >Delete</DropdownMenuItem>
           )}
         </DropdownMenuContent>
       </DropdownMenu>

@@ -1,6 +1,8 @@
 import { Avatar, Button, Typography } from "@mui/material";
-import { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { updateFollowApi } from "../../../api/userApi";
 import { IProfile } from "../../../shared/interfaces";
 import { useAppDispatch, useAppSelector } from "../../../state/hooks";
 import { updateActiveParticipant } from "../../../state/slices/chatSlice";
@@ -18,6 +20,8 @@ export const ProfileHeader = ({
   refetchProfile,
 }: ProfileHeaderProps) => {
   const [editModalOpen, setEditModalOpen] = useState(false);
+  const [isFollowing, setIsFollowing] = useState(profile.isFollowing);
+  const [followerCount, setFollowerCount] = useState(profile.followersCount || 0);
 
   const currentUserId = useAppSelector(
     (state) => state.userInfoSlice.userInfo.userId
@@ -27,6 +31,40 @@ export const ProfileHeader = ({
   );
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: () => {
+      if (!activeUserId) throw new Error("No user selected");
+      return updateFollowApi(activeUserId);
+    },
+    onSuccess: () => {
+      setIsFollowing(prev => !prev);
+      setFollowerCount(prev => isFollowing ? Math.max(prev - 1, 0) : prev + 1);
+    },
+    onError: (error) => {
+      console.error("Follow operation failed:", error);
+      // Optionally show error to user
+    }
+  });
+
+  const showFollowButton = useMemo(() => {
+    return currentUserId !== activeUserId && activeUserId;
+  }, [currentUserId, activeUserId]);
+
+  const handleMessageClick = () => {
+    if (!activeUserId) return;
+    
+    dispatch(
+      updateActiveParticipant({
+        profilePicture: profile.profilePicture,
+        userId: activeUserId,
+        userName: profile.profileName,
+        isFollowing: isFollowing,
+      })
+    );
+    navigate("/messages");
+  };
+
   return (
     <>
       <div className="flex flex-col md:flex-row items-center gap-8 mb-8">
@@ -61,7 +99,7 @@ export const ProfileHeader = ({
             </div>
             <div className="text-center">
               <Typography className="font-bold">
-                {profile.followersCount || 0}
+                {followerCount}
               </Typography>
               <Typography>Followers</Typography>
             </div>
@@ -72,32 +110,28 @@ export const ProfileHeader = ({
               <Typography>Following</Typography>
             </div>
           </div>
+
           <div className="my-2 flex items-center gap-3">
-            {currentUserId != activeUserId && (
-              <Button variant="outlined" className="">
-                {profile.isFollowing ? "Unfollow" : "Follow"}
+            {showFollowButton && (
+              <Button 
+                onClick={() => mutate()} 
+                variant="outlined" 
+                disabled={isPending}
+              >
+                {isFollowing ? "Unfollow" : "Follow"}
               </Button>
             )}
             <Button
-              onClick={() => {
-                dispatch(
-                  updateActiveParticipant({
-                    profilePicture: profile.profilePicture,
-                    userId: activeUserId!,
-                    userName: profile.profileName,
-                    isFollowing: profile.isFollowing,
-                  })
-                );
-                navigate("/messages");
-              }}
+              onClick={handleMessageClick}
               variant="outlined"
-              className=""
             >
               Message
             </Button>
           </div>
 
-          <Typography>{profile.profileDescription || "No bio yet."}</Typography>
+          <Typography>
+            {profile.profileDescription || "No bio yet."}
+          </Typography>
         </div>
       </div>
 
