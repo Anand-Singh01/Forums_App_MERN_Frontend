@@ -2,13 +2,16 @@ import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutline
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
+import TurnedInIcon from '@mui/icons-material/TurnedIn';
 import { useAppDispatch } from "../../../state/hooks";
 import { updateSelectedPostIdOnFeed } from "../../../state/slices/postSlice";
 import { useLikePost } from "../../../services/posts/useLikePost";
+import { useSavePost } from "../../../services/posts/useSavePost";
 
 interface LikeCommentAndShareProps {
   totalComments: number;
   isLiked: boolean;
+  isSaved: boolean;
   postId: string;
   totalLikes: number;
 }
@@ -16,11 +19,13 @@ interface LikeCommentAndShareProps {
 const LikeCommentAndShare = ({
   totalComments,
   isLiked,
+  isSaved,
   postId,
   totalLikes,
 }: LikeCommentAndShareProps) => {
   const dispatch = useAppDispatch();
   const { liked, likesCount, handleLikeClick } = useLikePost(postId, isLiked, totalLikes);
+  const { saved, handleSaveClick } = useSavePost(postId, isSaved);
 
   return (
     <div>
@@ -49,8 +54,12 @@ const LikeCommentAndShare = ({
         </div>
 
         <div className="flex gap-2 items-center">
-          <div>
-            <ShareOutlinedIcon sx={{ color: "#6a7282", fontSize: "1.2rem" }} />
+          <div className="cursor-pointer" onClick={handleSaveClick}>
+            {saved ? (
+              <TurnedInIcon sx={{ fontSize: "1.2rem", color: "#f472b6" }} />
+            ) : (
+              <TurnedInIcon sx={{ fontSize: "1.2rem" }} />
+            )}
           </div>
         </div>
       </section>

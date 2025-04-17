@@ -168,6 +168,31 @@ export const qcUpdateLikeStatus = (postId: string) => {
   });
 };
 
+
+export const qcUpdateSaveStatus = (postId: string) => {
+  queryClient.setQueryData(["posts"], (prevData: IPostInfo[] | undefined) => {
+    if (!prevData) {
+      return [];
+    }
+
+    const newData = [...prevData];
+    const index = newData.findIndex((p) => p.postId === postId);
+    if (index === -1) {
+      return newData;
+    }
+
+    const targetPost = newData[index];
+    const isSaved = !targetPost.isSaved;
+
+    newData[index] = {
+      ...targetPost,
+      isSaved
+    };
+
+    return newData;
+  });
+};
+
 export const qcUpdatePostInCache = (post: IPostInfo) => {
   const { postId } = post;
 
