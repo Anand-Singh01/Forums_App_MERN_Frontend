@@ -3,17 +3,12 @@ import { useMutation } from "@tanstack/react-query";
 import { useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { addPostApi } from "../../../../../api/postApi";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "../../../../../components/ui/avatar";
 import { Button } from "../../../../../components/ui/button";
 import { Input } from "../../../../../components/ui/input";
 import { IPostInfo } from "../../../../../shared/interfaces";
 import { useAppSelector } from "../../../../../state/hooks";
 import { getProfileImageSelector } from "../../../../../state/slices/userInfoSlice";
-import { queryClient } from "../../../../../state/tanstack/queryClient";
+import queryClient from "../../../../../state/tanstack/queryClient";
 
 export interface IPostData {
   caption: string;
@@ -53,6 +48,9 @@ const AddPost = () => {
         if (!prevData) {
           return [addedPost];
         }
+        console.log(addedPost);
+        console.log("*****");
+        console.log(prevData);
         return [addedPost, ...prevData];
       });
       // Reset form on success
@@ -85,11 +83,14 @@ const AddPost = () => {
 
   return (
     <div className="rounded-md p-3 w-full space-y-1 shadow-sm">
-      <section className="flex items-center gap-3 p-3">
-        <Avatar className="self-start">
-          <AvatarImage src={profileImage || "https://github.com/shadcn.png"} />
-          <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
+      <section className="flex gap-3 p-3">
+      <img
+          className="size-9 rounded-full object-cover"
+          src={profileImage}
+          onError={(e) => {
+            (e.target as HTMLImageElement).src = "/default-profile.png";
+          }}
+        />
         <div className="w-full space-y-2">
           <Input
             className="bg-gray-100 border-none"

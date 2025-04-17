@@ -18,4 +18,20 @@ function Input({ className, type, ...props }: React.ComponentProps<"input">) {
   )
 }
 
-export { Input }
+
+export const Input2 = React.forwardRef<HTMLInputElement, React.InputHTMLAttributes<HTMLInputElement>>(
+  ({ ...props }, ref) => {
+    return (
+      <input
+        ref={ref}
+        className="input-className"
+        {...props}
+      />
+    );
+  }
+);
+
+Input.displayName = "Input";
+
+
+export { Input, }

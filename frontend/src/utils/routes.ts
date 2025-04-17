@@ -3,9 +3,12 @@ const routes = {
     login: "/login",
     register:"/register",
     profile: "/profile",
-    saved: "/saved",
-    liked: "/liked"
-
+    settings: "/settings",
+    messages: "/messages",
+    search: "/search",
+    
+    //liked: "/liked",
+    //saved: "/saved",
 };
 
 export default routes;

@@ -1,27 +1,23 @@
 import { useQuery } from "@tanstack/react-query";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { getAllFollowers } from "../../../api/follower-followApi";
-import LoaderSpinner from "../../../shared/components/LoaderSpinner";
-import { useAppSelector } from "../../../state/hooks";
 import {
-  AccountCircle as AccountCircleIcon,
-  HomeOutlined as HomeOutlinedIcon,
-  SearchOutlined as SearchOutlinedIcon,
-  TextsmsOutlined as TextsmsOutlinedIcon,
-  BookmarksOutlined as BookmarksOutlinedIcon,
-  SettingsOutlined as SettingsOutlinedIcon,
-} from "@mui/icons-material";
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "../../../components/ui/popover";
+import LoaderSpinner from "../../../shared/components/LoaderSpinner";
+import { leftSideBarLinks } from "../../../utils/util";
+import SearchAccounts from "./feed/components/SearchAccounts";
+import { updateselectedUserProfileIdId } from "../../../state/slices/postSlice";
+import { useAppDispatch, useAppSelector } from "../../../state/hooks";
 
 interface Follower {
   profilePicture: string;
   userId: string;
   userName: string;
 }
-
-const MAX_FOLLOWERS_DISPLAY = 5;
-
 const LeftSideBar = () => {
-  const currentUser = useAppSelector(state => state.userInfoSlice.userInfo);
   const {
     data: followers = [],
     isPending: isFetchingFollowers,
@@ -30,110 +26,144 @@ const LeftSideBar = () => {
     queryKey: ["followers"],
     queryFn: getAllFollowers,
     initialData: [],
-    retry: 1,
+    retry: 2,
   });
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const currentUserId = useAppSelector(state => state.userInfoSlice.userInfo.userId);
+  let currentElement:
+    | "Profile"
+    | "Feed"
+    | "Search"
+    | "Messages"
+    | "My Liked"
+    | "My Saved"
+    | "Settings" = "Feed";
 
   const location = useLocation();
 
-  // Define the sidebar links directly in the component
-  const leftSideBarLinks = [
-    {
-      Icon: AccountCircleIcon,
-      path: `/profile/${currentUser.userId}`,
-      title: "Profile",
-    },
-    {
-      Icon: HomeOutlinedIcon,
-      path: "/",
-      title: "Feed",
-    },
-    {
-      Icon: SearchOutlinedIcon,
-      path: "/search",
-      title: "Search",
-    },
-    {
-      Icon: TextsmsOutlinedIcon,
-      path: "/messages",
-      title: "Messages",
-    },
-    {
-      Icon: BookmarksOutlinedIcon,
-      path: "/saved",
-      title: "My favorites",
-    },
-    {
-      Icon: SettingsOutlinedIcon,
-      path: "/settings",
-      title: "Settings",
-    },
-  ];
-
-  // Determine active link based on current path
-  const activeLink = leftSideBarLinks.find(link => 
-    location.pathname === link.path || 
-    (link.path !== "/" && location.pathname.startsWith(link.path))
-  )?.title || "Feed";
-
-  const displayedFollowers = followers.slice(0, MAX_FOLLOWERS_DISPLAY);
+  switch (location.pathname) {
+    case "/":
+      currentElement = "Feed";
+      break;
+      case "/search":
+      currentElement = "Search";
+      break;
+    case "/liked":
+      currentElement = "My Liked";
+      break;
+      case "/saved":
+      currentElement = "My Saved";
+      break;
+      case "/profile":
+      currentElement = "Profile";
+      break;
+      case "/settings":
+      currentElement = "Settings";
+      break;
+    case "/messages":
+      currentElement = "Messages";
+      break;
+    default:
+      currentElement = "Feed";
+      break;
+  }
 
   return (
     <div className="w-[15rem] h-full flex flex-col bg-white pt-4 space-y-4 text-base sticky top-0">
       {/* Navigation Links */}
       <nav>
-        {leftSideBarLinks.map(({ Icon, path, title }, index) => (
-          <Link
-            key={path || index}
-            to={path}
-            className={`flex py-3 px-5 hover:bg-blue-50 gap-3 items-center transition-colors duration-200 rounded mx-2 ${
-              activeLink === title ? "bg-blue-50" : ""
-            }`}
-          >
-            <Icon
-              className={`text-[#6a7282] w-5 h-5 ${
-                activeLink === title ? "text-pink-600" : ""
-              }`}
-            />
-            <span
-              className={`${activeLink === title ? "text-pink-600 font-medium" : ""}`}
+        {leftSideBarLinks.map(({ Icon, path, title }, index) =>
+          path !== "/search" ? (
+            <Link
+              key={path || index}
+              to={path}
+              onClick={()=>{
+                 dispatch(updateselectedUserProfileIdId(currentUserId))
+                navigate("/profile");
+              }}
+              className="flex py-3 px-5 hover:bg-blue-50 gap-3 items-center transition-colors duration-200 rounded mx-2"
             >
-              {title}
-            </span>
-          </Link>
-        ))}
+              <Icon
+                className={`text-[#6a7282] w-5 h-5 ${
+                  currentElement === title ? "text-pink-600" : ""
+                }`}
+              />
+              <span
+                className={`${currentElement === title ? "text-pink-600" : ""}`}
+              >
+                {title}
+              </span>
+            </Link>
+          ) : (
+            <div className="">
+              <Popover>
+                <PopoverTrigger className="w-full">
+                  <div
+                    key={path || index}
+                    className="flex py-3 px-5 hover:bg-blue-50 gap-3 items-center 
+                  transition-colors duration-200 rounded mx-2"
+                  >
+                    <Icon
+                      className={`text-[#6a7282] w-5 h-5 ${
+                        currentElement === title ? "text-pink-600" : ""
+                      }`}
+                    />
+                    <span
+                      className={`${
+                        currentElement === title ? "text-pink-600" : ""
+                      }`}
+                    >
+                      {title}
+                    </span>
+                  </div>
+                </PopoverTrigger>
+                <PopoverContent className="absolute top-[-3.3rem] left-[8rem]">
+                  <SearchAccounts />
+                </PopoverContent>
+              </Popover>
+            </div>
+          )
+        )}
       </nav>
 
-      <div className="border-t border-gray-200 mx-4 my-2"></div>
+      <div className="border-t border-gray-200 mx-4 my-2">
+        {/* Followers Section */}
+        <section className="px-5 space-y-4">
+          <h3 className="font-semibold text-gray-800">
+            My Followers ({followers.length})
+          </h3>
 
-      {/* Followers Section */}
-      <section className="px-5 space-y-4">
-        <h3 className="font-semibold text-gray-800">My Followers</h3>
-
-        <div className="space-y-3">
-          {isFetchingFollowers ? (
-            <LoaderSpinner size="small" />
-          ) : isError ? (
-            <p className="text-red-500 text-sm">Failed to load followers</p>
-          ) : displayedFollowers.length === 0 ? (
-            <p className="text-gray-500 text-sm">No followers yet</p>
-          ) : (
-            displayedFollowers.map(({ profilePicture, userId, userName }) => (
-              <Link
-                to={`/profile/${userId}`}
-                key={userId}
-                className="flex gap-2 items-center hover:bg-gray-50 p-2 rounded transition-colors"
-              >
-                <img 
-                  src={profilePicture || "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"} 
-                  className="w-8 h-8 rounded-full object-cover"
-                  alt={userName}
-                />
-                <span className="truncate">{userName}</span>
-              </Link>
-            ))
-          )}
-        </div>
-      </section>
+          <div className="space-y-3 cursor-pointer">
+            {isFetchingFollowers ? (
+              <LoaderSpinner />
+            ) : isError ? (
+              <p className="text-red-500 text-sm">Failed to load followers</p>
+            ) : followers.length === 0 ? (
+              <p className="text-gray-500 text-sm">No followers yet</p>
+            ) : (
+              followers.map(({ profilePicture, userId, userName }) => (
+                <div
+                onClick={()=>{
+                  dispatch(updateselectedUserProfileIdId(userId))
+                  navigate("/profile");
+                }}
+                  key={userId}
+                  className="flex gap-2 items-center hover:bg-gray-50
+                 p-2 rounded transition-colors"
+                >
+                  <img
+                    src={profilePicture}
+                    className="w-8 h-8 rounded-full object-cover"
+                  />
+                  <span className="truncate">{userName}</span>
+                </div>
+              ))
+            )}
+          </div>
+        </section>
+      </div>
     </div>
   );
 };

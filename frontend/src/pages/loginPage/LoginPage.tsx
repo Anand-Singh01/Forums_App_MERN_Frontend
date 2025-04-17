@@ -10,11 +10,14 @@ import LoginForm from "./components/LoginForm";
 const LoginPage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { mutate, isPending, isError, data, isSuccess } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: (data: IUserLogin) => loginApi(data),
-    onSuccess:(responseData)=>{
+    onSuccess:async(responseData)=>{
       if(responseData){
-        dispatch(updateUserInfoAndAuth({data:responseData, isAuthenticated:true}))
+        dispatch(updateUserInfoAndAuth({
+          data: responseData,
+          isAuthenticated: true
+        }));
         navigate(routes.home);
       }
     }

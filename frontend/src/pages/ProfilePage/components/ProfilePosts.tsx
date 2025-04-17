@@ -1,5 +1,5 @@
 import { Grid, Typography } from "@mui/material";
-import { IPostInfo } from "../../../../shared/interfaces";
+import { IPostInfo } from "../../../shared/interfaces";
 
 interface ProfilePostsProps {
   posts: IPostInfo[];

@@ -72,7 +72,7 @@ const Notifications = () => {
 
   return (
     <div className="bg-white rounded-lg shadow-sm p-4 max-w-2xl mx-auto">
-      <h2 className="text-xl font-bold mb-6 text-gray-800">Notifications</h2>
+      <h2 className="text-xl font-bold mb-6 text-gray-800">Activities</h2>
 
       {Object.entries(groupedNotifications).map(([dateGroup, items]) => (
         <div key={dateGroup} className="mb-6 last:mb-0">

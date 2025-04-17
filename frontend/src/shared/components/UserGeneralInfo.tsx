@@ -1,9 +1,4 @@
 import React from "react";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "../../components/ui/avatar";
 
 interface IUserGeneralInfo {
   userName: string;
@@ -18,10 +13,13 @@ const UserGeneralInfo: React.FC<IUserGeneralInfo> = ({
   return (
     <div>
       <div className="flex items-center gap-3">
-        <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" />
-          <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
+        <img
+          className="w-8 h-8 rounded-full object-cover mt-1 flex-shrink-0"
+          src={profileImage}
+          onError={(e) => {
+            (e.target as HTMLImageElement).src = "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
+          }}
+        />
         <div>
           <p>{userName}</p>
           <p className="text-gray-500 text-sm">{region}</p>
