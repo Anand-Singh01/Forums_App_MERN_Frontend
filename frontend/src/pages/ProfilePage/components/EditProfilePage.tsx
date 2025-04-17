@@ -1,11 +1,19 @@
-import { useState, useEffect } from "react";
-import { Avatar, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Typography } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import {
+  Avatar,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  TextField,
+} from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { useUpdateProfile } from "../../../api/ProfileApi";
-import { useAppSelector } from "../../../state/hooks";
-import LoaderSpinner from "../../../shared/components/LoaderSpinner";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { useUpdateProfile } from "../../../api/ProfileApi";
+import LoaderSpinner from "../../../shared/components/LoaderSpinner";
+import { useAppSelector } from "../../../state/hooks";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -30,12 +38,19 @@ interface EditProfilePageProps {
   onProfileUpdated: () => void;
 }
 
-export const EditProfilePage = ({ open, onClose, profile, onProfileUpdated }: EditProfilePageProps) => {
+export const EditProfilePage = ({
+  open,
+  onClose,
+  profile,
+  onProfileUpdated,
+}: EditProfilePageProps) => {
   const [name, setName] = useState(profile.profileName);
-  const [description, setDescription] = useState(profile.profileDescription || "");
+  const [description, setDescription] = useState(
+    profile.profileDescription || ""
+  );
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
-  const userId = useAppSelector(state => state.userInfoSlice.userInfo.userId);
+  const userId = useAppSelector((state) => state.userInfoSlice.userInfo.userId);
   const { mutate: updateProfile, isPending } = useUpdateProfile();
 
   useEffect(() => {
@@ -59,19 +74,22 @@ export const EditProfilePage = ({ open, onClose, profile, onProfileUpdated }: Ed
     formData.append("description", description);
     formData.append("isImageUpdated", String(!!selectedImage));
     if (selectedImage) {
-      formData.append("file", selectedImage);
+      formData.append("postImage", selectedImage);
     }
 
-    updateProfile({ userId, formData }, {
-      onSuccess: () => {
-        toast.success("Profile updated successfully!");
-        onProfileUpdated();
-        onClose();
-      },
-      onError: () => {
-        toast.error("Failed to update profile");
+    updateProfile(
+      { userId, formData },
+      {
+        onSuccess: () => {
+          toast.success("Profile updated successfully!");
+          onProfileUpdated();
+          onClose();
+        },
+        onError: () => {
+          toast.error("Failed to update profile");
+        },
       }
-    });
+    );
   };
 
   return (
@@ -90,9 +108,9 @@ export const EditProfilePage = ({ open, onClose, profile, onProfileUpdated }: Ed
             startIcon={<CloudUploadIcon />}
           >
             Upload new photo
-            <VisuallyHiddenInput 
-              type="file" 
-              accept="image/*" 
+            <VisuallyHiddenInput
+              type="file"
+              accept="image/*"
               onChange={handleImageChange}
             />
           </Button>
@@ -101,7 +119,7 @@ export const EditProfilePage = ({ open, onClose, profile, onProfileUpdated }: Ed
         <TextField
           margin="normal"
           fullWidth
-          label="Username"
+          label="Profile Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
@@ -121,9 +139,9 @@ export const EditProfilePage = ({ open, onClose, profile, onProfileUpdated }: Ed
         <Button onClick={onClose} disabled={isPending}>
           Cancel
         </Button>
-        <Button 
-          onClick={handleSubmit} 
-          variant="contained" 
+        <Button
+          onClick={handleSubmit}
+          variant="contained"
           disabled={isPending || !name.trim()}
         >
           {isPending ? <LoaderSpinner size={20} /> : "Save Changes"}

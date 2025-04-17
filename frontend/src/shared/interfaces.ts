@@ -57,6 +57,7 @@ export interface IProfile {
   followersCount?: number;
   followingCount?: number;
   postsCount?: number;
+  isFollowing:boolean
 }
 
 export interface IProfileResponse {

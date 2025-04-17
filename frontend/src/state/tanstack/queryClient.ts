@@ -1,5 +1,5 @@
 import { QueryClient } from "@tanstack/react-query";
-import { IConversationDto } from "../../api/chatApi";
+import { IConversationDto, IParticipantDto } from "../../api/chatApi";
 import { ICommentDto, IReplyDto } from "../../api/commentApi";
 import { IRandomUserInfoDto } from "../../api/userApi";
 import { IPostInfo } from "../../shared/interfaces";
@@ -71,12 +71,25 @@ export const qcAddReply = (newReply: IReplyDto, commentId: string) => {
   );
 };
 //["conversation", receiverId]
-export const qcAddMessageToConversation = (key:string[], message:string, senderId:string) => {
+export const qcAddMessageToConversation = (key:string[], message:string, senderId:string, currentInfo, friendInfo) => {
   queryClient.setQueryData(
     key,
     (prevData: IConversationDto | undefined) => {
-      if (!prevData) {
-        return prevData;
+      if (!prevData || !prevData.messages) {
+        return {
+          conversationId:"",
+          messages:[{
+            messageId: "",
+            content: message,
+            isEdited: false,
+            senderId,
+            createdAt: new Date()
+          }],
+          participants:[
+            ...currentInfo,
+            ...friendInfo
+          ]
+        } as IConversationDto;
       }
       const newMessage = {
         content: message,
@@ -90,6 +103,22 @@ export const qcAddMessageToConversation = (key:string[], message:string, senderI
         ...prevData,
         messages: [...prevData.messages, newMessage],
       };
+    }
+  );
+};
+
+export const qcAddParticipant = (key: string[], participantInfo: IParticipantDto) => {
+  queryClient.setQueryData(
+    key,
+    (prevData: IParticipantDto[] | undefined) => {
+      if (!prevData) {
+        return [participantInfo];
+      }
+      const index = prevData.findIndex(p => p.userId === participantInfo.userId);
+      if (index === -1) {
+        return [...prevData, participantInfo];
+      }
+      return prevData;
     }
   );
 };

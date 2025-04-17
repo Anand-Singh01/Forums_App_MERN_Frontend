@@ -1,28 +1,28 @@
-import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { getAllChatPartners, IParticipantDto } from "../../../api/chatApi";
+import { IParticipantDto } from "../../../api/chatApi";
 import { Input } from "../../../components/ui/input";
 import Participants from "./Participants";
+interface ChatSidebarProps {
+  participants: IParticipantDto[];
+}
+const ChatSidebar = ({ participants }: ChatSidebarProps) => {
 
-const ChatSidebar = () => {
-  const queryRes = useQuery({
-    queryKey: ["participants"],
-    queryFn: getAllChatPartners,
-  });
   const [filteredParticipants, setFilteredParticipants] = useState<
     IParticipantDto[]
   >([]);
   const [inputText, setInputText] = useState("");
 
   useEffect(() => {
-    if (queryRes.data && queryRes.data.length > 0) {
+    if (participants && participants.length > 0) {
       setFilteredParticipants(
-        queryRes.data.filter(({ userName }) => {
+        participants.filter(({ userName }) => {
           return userName.toLowerCase().includes(inputText.toLowerCase());
         })
       );
     }
-  }, [inputText, queryRes.data]);
+  }, [inputText, participants]);
+
+  
   return (
     <div className="w-[20rem] h-full pt-2 px-5 flex flex-col gap-5">
       <Input
@@ -32,7 +32,7 @@ const ChatSidebar = () => {
         placeholder="search or start a new chat"
       />
       <Participants
-        queryRes={queryRes}
+        queryRes={participants}
         filteredParticipants={filteredParticipants}
       />
     </div>

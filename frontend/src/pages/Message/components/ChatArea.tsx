@@ -10,7 +10,7 @@ interface IChatArea {
 const DEFAULT_PROFILE_PIC = "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
 
 const ChatArea: React.FC<IChatArea> = ({ conversation }) => {
-  const { messages, participants } = conversation;
+  const { messages = [], participants } = conversation;
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
   // Auto-scroll to bottom when messages change
@@ -33,7 +33,7 @@ const ChatArea: React.FC<IChatArea> = ({ conversation }) => {
         ref={chatContainerRef}
         className="flex-1 flex flex-col gap-10 p-4 overflow-y-auto no-scrollbar"
       >
-        {messages.length === 0 ? (
+        {messages && messages.length === 0 ? (
           <div className="flex-1 flex items-center justify-center text-gray-500">
             No messages yet. Start the conversation!
           </div>

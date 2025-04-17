@@ -9,12 +9,12 @@ export interface IParticipantDto {
 
 export interface IConversationDto {
   conversationId: string;
-  participants:     {
+  participants:{
     userId: string;
     userName: string;
     profilePicture: string;
   }[];
-  messages:     {
+  messages:{
     messageId: string;
     content: string;
     isEdited: boolean;
