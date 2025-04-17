@@ -2,7 +2,6 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { IProfileResponse } from "../shared/interfaces";
 
-
 export interface UserProfile {
   id: string;
   username: string;
@@ -25,21 +24,27 @@ export interface UserProfile {
 
 export const useGetUserProfile = (userId?: string) => {
   return useQuery<IProfileResponse>({
-    queryKey: ['profile', userId],
+    queryKey: ["profile", userId],
     queryFn: async () => {
       const response = await axios.get(`/profile/get-profile/${userId}`);
       return response.data;
     },
-    enabled: !!userId 
+    enabled: !!userId,
   });
 };
 
 export const useUpdateProfile = () => {
-  return useMutation({
-    mutationFn: async ({ userId, formData }: { userId: string; formData: FormData }) => {
+  return useMutation<IProfileResponse, unknown, { userId: string; formData: FormData }>({
+    mutationFn: async ({
+      userId,
+      formData,
+    }: {
+      userId: string;
+      formData: FormData;
+    }) => {
       const response = await axios.put(`/profile/update-profile`, formData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          "Content-Type": "multipart/form-data",
         },
       });
       return response.data;

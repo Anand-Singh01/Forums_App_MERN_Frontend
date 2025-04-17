@@ -17,6 +17,17 @@ const ChatInput = () => {
     receiverId: state.chatSlice.activeParticipant?.userId,
     isConnected: state.wsSlice.readyState === WebSocket.OPEN,
   }));
+  const currentUserinfo = {
+    userId: senderId,
+    userName: useAppSelector(state => state.userInfoSlice.userInfo.userName),
+    profilePicture: useAppSelector(state => state.userInfoSlice.userInfo.profileName),
+  }
+
+  const friendInfo = {
+    userId: receiverId,
+    userName: useAppSelector(state => state.chatSlice.activeParticipant?.userName),
+    profilePicture: useAppSelector(state => state.chatSlice.activeParticipant?.profilePicture),
+  }
 
   const handleSendMessage = async () => {
     if (isConnected && receiverId && message.trim()) {
@@ -26,7 +37,7 @@ const ChatInput = () => {
         senderId,
         type: "message",
       } as IWebsocketMessage<string>);
-      qcAddMessageToConversation(["conversation", receiverId], message, senderId);
+      qcAddMessageToConversation(["conversation", receiverId], message, senderId, currentUserinfo, friendInfo);
       sendSound.play();
       setMessage("");
     }
