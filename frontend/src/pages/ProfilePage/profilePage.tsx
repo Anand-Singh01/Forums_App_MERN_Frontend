@@ -28,7 +28,10 @@ const ProfilePage = () => {
           isCurrentUser={isCurrentUser}
           refetchProfile={refetch}
         />
-        <ProfileTabs 
+
+        {isCurrentUser ? (
+          <>
+          <ProfileTabs 
           value={activeTab} 
           onTabChange={(_, newValue) => setActiveTab(newValue)} 
         />
@@ -36,6 +39,11 @@ const ProfilePage = () => {
         {activeTab === 0 && <ProfilePosts posts={[]} />}
         {activeTab === 1 && <SavedPostsPage />}
         {activeTab === 2 && <LikedPostsPage />}
+        </>
+        ) : (
+          <ProfilePosts posts={[]} />
+        )}
+        
       </div>
     </Layout>
   );

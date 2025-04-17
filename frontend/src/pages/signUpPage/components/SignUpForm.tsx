@@ -33,14 +33,17 @@ const SignUpForm: React.FC<ISignUpFormProps> = ({ isLoading, onFormSubmit }) => 
     onFormSubmit(data);
   };
 
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="text-center space-y-3 border-[1px] rounded-lg lg:w-[20%] p-5"
+      className="w-full max-w-md mx-auto space-y-4 border border-gray-200 rounded-2xl p-6 shadow-md bg-white"
       action=""
     >
+      <h2 className="text-xl font-semibold text-center">Create an Account</h2>
+
       <div className="space-y-1">
-        <Label>Email</Label>
+        <Label  className="text-sm font-medium text-gray-700">Email</Label>
         <Controller
           name="email"
           control={control}
@@ -50,10 +53,10 @@ const SignUpForm: React.FC<ISignUpFormProps> = ({ isLoading, onFormSubmit }) => 
           }}
           render={({ field }) => (
             <Input
-              {...field} 
-              type="email"
-              placeholder="email"
-              className=""
+              {...field}type="email" placeholder="email"
+              className="w-full rounded-lg border border-gray-300 px-4 py-2 text-base text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+
+              
             />
           )}
         />
@@ -61,7 +64,7 @@ const SignUpForm: React.FC<ISignUpFormProps> = ({ isLoading, onFormSubmit }) => 
       </div>
 
       <div className="space-y-1">
-        <Label>Password</Label>
+        <Label  className="text-sm font-medium text-gray-700">Password</Label>
         <Controller
           name="password"
           control={control}
@@ -70,11 +73,9 @@ const SignUpForm: React.FC<ISignUpFormProps> = ({ isLoading, onFormSubmit }) => 
             minLength: { value: 1, message: "Password must be at least 6 characters long" },
           }}
           render={({ field }) => (
-            <Input
-              {...field} 
-              type="password"
-              placeholder="password"
-              className=""
+            <Input {...field} type="password" placeholder="password"
+              className="w-full rounded-lg border border-gray-300 px-4 py-2 text-base text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            
             />
           )}
         />
@@ -84,7 +85,7 @@ const SignUpForm: React.FC<ISignUpFormProps> = ({ isLoading, onFormSubmit }) => 
 
   {/* First Name */}
   <div className="space-y-1">
-    <Label>First Name</Label>
+    <Label  className="text-sm font-medium text-gray-700">First Name</Label>
     <Controller
       name="firstName"
       control={control}
@@ -92,7 +93,9 @@ const SignUpForm: React.FC<ISignUpFormProps> = ({ isLoading, onFormSubmit }) => 
         required: "First name is required",
       }}
       render={({ field }) => (
-        <Input {...field} type="text" placeholder="First Name" />
+        <Input {...field} type="text" placeholder="First Name"
+        className="w-full rounded-lg border border-gray-300 px-4 py-2 text-base text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+ />
       )}
     />
     {errors.firstName && <p>{errors.firstName.message}</p>}
@@ -100,7 +103,7 @@ const SignUpForm: React.FC<ISignUpFormProps> = ({ isLoading, onFormSubmit }) => 
 
   {/* Last Name */}
   <div className="space-y-1">
-    <Label>Last Name</Label>
+    <Label  className="text-sm font-medium text-gray-700">Last Name</Label>
     <Controller
       name="lastName"
       control={control}
@@ -108,7 +111,9 @@ const SignUpForm: React.FC<ISignUpFormProps> = ({ isLoading, onFormSubmit }) => 
         required: "Last name is required",
       }}
       render={({ field }) => (
-        <Input {...field} type="text" placeholder="Last Name" />
+        <Input {...field} type="text" placeholder="Last Name" 
+        className="w-full rounded-lg border border-gray-300 px-4 py-2 text-base text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+/>
       )}
     />
     {errors.lastName && <p>{errors.lastName.message}</p>}
@@ -116,7 +121,7 @@ const SignUpForm: React.FC<ISignUpFormProps> = ({ isLoading, onFormSubmit }) => 
 
   {/* Username */}
   <div className="space-y-1">
-    <Label>Username</Label>
+    <Label  className="text-sm font-medium text-gray-700">Username</Label>
     <Controller
       name="userName"
       control={control}
@@ -124,15 +129,19 @@ const SignUpForm: React.FC<ISignUpFormProps> = ({ isLoading, onFormSubmit }) => 
         required: "Username is required",
       }}
       render={({ field }) => (
-        <Input {...field} type="text" placeholder="Username" />
+        <Input {...field} type="text" placeholder="Username" 
+        className="w-full rounded-lg border border-gray-300 px-4 py-2 text-base text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+/>
+        
       )}
     />
     {errors.userName && <p>{errors.userName.message}</p>}
   </div>
 
   {/* Date of Birth */}
+  
   <div className="space-y-1">
-    <Label>Date of Birth</Label>
+    <Label  className="text-sm font-medium text-gray-700" >Date of Birth</Label>
     <Controller
       name="dob"
       control={control}
@@ -140,13 +149,18 @@ const SignUpForm: React.FC<ISignUpFormProps> = ({ isLoading, onFormSubmit }) => 
         required: "Date of birth is required",
       }}
       render={({ field }) => (
-        <Input {...field} type="date" value={field.value ? field.value.toISOString().split('T')[0] : ''} />
+        <Input type="date" value={field.value ? field.value.toISOString().split('T')[0] : ""} 
+        onChange={(e) => field.onChange(new Date(e.target.value))}
+        className="w-full rounded-lg border border-gray-300 px-4 py-2 text-base text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
       )}
     />
-    {errors.dob && <p>{errors.dob.message}</p>}
+    {errors.dob && <p className="text-sm text-red-500"> {errors.dob.message}</p>}
   </div>
 
-  <Button type="submit" className="cursor-pointer" disabled={isLoading}>
+  <Button type="submit" 
+  className="cursor-pointer w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium transition duration-200 disabled:opacity-50" 
+  disabled={isLoading}>
     {isLoading ? <LoaderSpinner /> : "SignUp"}
   </Button>
 </form>
